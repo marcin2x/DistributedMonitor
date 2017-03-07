@@ -14,4 +14,8 @@ Currently push to master is blocked. So in order to make your changes:
 * Merge pull request
 
 ## Slack
-In order to communicate with team members please visit our [Slack] (https://distributedmonitor.slack.com/)
+In order to communicate with team members, please visit our [Slack](https://distributedmonitor.slack.com/).
+
+
+## Trello
+In order to see how work is going, please visit our [Trello](https://trello.com/distributedmonitor).

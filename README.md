@@ -12,3 +12,6 @@ Currently push to master is blocked. So in order to make your changes:
 * Create pull request
 * Ask someone to review
 * Merge pull request
+
+## Slack
+In order to communicate with team members please visit our [Slack] (https://distributedmonitor.slack.com/)

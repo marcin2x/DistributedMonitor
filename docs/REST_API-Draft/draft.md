@@ -77,89 +77,10 @@ Statusy odpowiedzi:
 * 400 brak wymaganych parametrow
 
 # Operacja na zasobach
-
-
-## Zasoby
-
-### Pobranie listy zasobów(monitorów)
-GET /resources
-
-Parametry:
-
-| Nazwa | Wymagany | Opis | Domyślnie |
-|-------|----------|------|-----------|
-| names | opcjonalny | nazwa poszukiwanych zasobów | |
-| count | opcjonalny | ilosc zasobów | 50 |
-| offset | opcjonalny | ilosc ignorowanych pierwszych wyników(do stronnicowania) | 0 |
-
-Odpowiedź:
-
-| Nazwa | Wymagany | Opis | Domyślnie |
-|-------|----------|------|-----------|
-| id | wymagany | id monitora | |
-| name | wymagany | nazwa monitora | 50 |
-
-
-```javascript
-{
-    [
-        {
-            id: [long],
-            name : [string]
-        },
-        {
-            id: [long],
-            name : [string]
-        },
-    ]
-}
-```
-
-Statusy odpowiedzi:
-* 200 pobrano zasoby
-
 ## Pomiary
 
 ### Pobranie pomiarów 
-GET /resources/measurements
-
-Parametry:
-
-| Nazwa | Wymagany | Opis | Domyślnie |
-|-------|----------|------|-----------|
-| names | opcjonalny | nazwa poszukiwanych pomiarów | |
-| resource-names | opcjonalny | nazwa przeszukiwanych zasobów | |
-| count | opcjonalny | ilosc pomiarów | 50 |
-| offset | opcjonalny | ilosc ignorowanych pierwszych wyników(do stronnicowania) | 0 |
-
-Odpowiedź:
-
-| Nazwa | Wymagany | Opis | Domyślnie |
-|-------|----------|------|-----------|
-| id | wymagany | id pomiaru | |
-| resource_id | wymagany | id monitora z ktorego pochodzi pomiar | |
-| name | wymagany | nazwa pomiaru |  |
-
-
-```javascript
-{
-    [
-        {
-            id: [long],
-            resource_id: [long],
-            name : [string],
-        },
-        {
-            id: [long],
-            resource_id: [long],
-            name : [string],
-        },
-    ]
-}
-```
-
-### Pobranie pomiarów dla wybranego zasobu(monitora)
-GET /resources/{resource_id}/measurements
+GET /measurements
 
 Parametry:
 
@@ -175,6 +96,7 @@ Odpowiedź:
 |-------|----------|------|-----------|
 | id | wymagany | id pomiaru | |
 | name | wymagany | nazwa pomiaru |  |
+
 
 ```javascript
 {
@@ -193,18 +115,72 @@ Odpowiedź:
 
 Statusy odpowiedzi:
 * 200 pobrano pomiary
-* 404 nie znaleziono zasobu o podanym id
 
-
-
-### Pobranie wartości pomiarów
-GET /resources/measurements/values
+### Zarejestrowanie pomiaru z sensora 
+POST /measurements
 
 Parametry:
 
 | Nazwa | Wymagany | Opis | Domyślnie |
 |-------|----------|------|-----------|
-| resource-names | opcjonalny | nazwa poszukiwanych zasobow | |
+| sensor_name | wymagany | nazwa sensora | |
+| measurement_name | wymagany | nazwa pomiaru |  |
+| metadata  | wymagany | metadane o pomiarze |  |
+
+```javascript
+{
+    sensor_name: [string],
+    measurement_name : [string]
+    metadata  : [object]
+}
+```
+Odpowiedź:
+
+| Nazwa | Wymagany | Opis | Domyślnie |
+|-------|----------|------|-----------|
+| sensor_id | wymagany | id sensora | |
+| measurement_id | wymagany | id pomiaru | |
+
+
+```javascript
+
+{
+    sensor_id: [long],
+    measurement_id: [long]
+}    
+```    
+
+Statusy odpowiedzi:
+* 201 utworzono nowy pomiar z sensora
+* 409 pomiar o takiej nazwie z podanego sensora juz istnieje
+
+### Aktualizacja metadanych pomiaru 
+PUT /measurements/{measurement_id}
+
+Parametry:
+
+| Nazwa | Wymagany | Opis | Domyślnie |
+|-------|----------|------|-----------|
+| sensor_id | wymagany | id sensora | |
+| metadata  | wymagany | metadane o pomiarze |  |
+
+```javascript
+{
+    sensor_id: [long],
+    metadata  : [object]
+}
+```
+Statusy odpowiedzi:
+* 20 zaktualizowano metadane sensora
+* 404 sensor lub pomiar o podanym id nie istnieje
+
+### Pobranie wartości pomiarów
+GET /measurements/values
+
+Parametry:
+
+| Nazwa | Wymagany | Opis | Domyślnie |
+|-------|----------|------|-----------|
 | measurement-names | opcjonalny | nazwa poszukiwanych pomiarów | |
 | time-from | opcjonalny | pomiary starsze niż podana data | |
 | time-to | opcjonalny | pomiary młodsze niż podana data | |
@@ -215,8 +191,6 @@ Odpowiedź:
 
 | Nazwa | Wymagany | Opis | Domyślnie |
 |-------|----------|------|-----------|
-| resource_id | wymagany | id monitora | |
-| resource_name | wymagany | nazwa monitora |  |
 | measurment_id | wymagany | id pomiaru |  |
 | measurment_name | wymagany | nazwa pomiaru |  |
 | value | wymagany | wartość pomiaru |  |
@@ -224,81 +198,38 @@ Odpowiedź:
 
 ```javascript
 {
-    [ 
+    [     
+                                     
         {
-            resource_id: [long],
-            resource_name : [string],
-            measurments : 
-            [                          
+            measurment_id: [long],
+            measurment_name : [string], 
+            values : 
+            [
                 {
-                    measurment_id: [long],
-                    measurment_name : [string], 
-                    values : 
-                    [
-                        {
-                            value: [string],
-                            date: [string]
-                        },
-                        {
-                            value: [string],
-                            date: [string]
-                        }
-                    ]
+                    value: [string],
+                    date: [string]
                 },
                 {
-                    measurment_id: [long],
-                    measurment_name : [string], 
-                    values : 
-                    [
-                        {
-                            value: [string],
-                            date: [string]
-                        },
-                        {
-                            value: [string],
-                            date: [string]
-                        }
-                    ]
-                }                          
-            ]
-        }, 
-        {
-            resource_id: [long],
-            resource_name : [string],
-            measurments : 
-            [                          
-                {
-                    measurment_id: [long],
-                    measurment_name : [string], 
-                    values : 
-                    [
-                        {
-                            value: [string],
-                            date: [string]
-                        },
-                        {
-                            value: [string],
-                            date: [string]
-                        }
-                    ]
-                },
-                {
-                    measurment_id: [long],
-                    measurment_name : [string], 
-                    values : 
-                    [
-                        {
-                            value: [string],
-                            date: [string]
-                        },
-                        {
-                            value: [string],
-                            date: [string]
-                        }
-                    ]
-                }                          
+                    value: [string],
+                    date: [string]
+                }
             ]
         },
+        {
+            measurment_id: [long],
+            measurment_name : [string], 
+            values : 
+            [
+                {
+                    value: [string],
+                    date: [string]
+                },
+                {
+                    value: [string],
+                    date: [string]
+                }
+            ]
+        }   
     ]
 }
 ```
@@ -306,34 +237,76 @@ Odpowiedź:
 Statusy odpowiedzi:
 * 200 pobrano pomiary
 
+### Utworzenie nowej wartosci pomiaru
+POST /measurements/{measurement_id}
+
+Parametry:
+
+| Nazwa | Wymagany | Opis | Domyślnie |
+|-------|----------|------|-----------|
+| sensor_id | wymagany | id sensora, z ktorego przychodzi pomiar | 
+| value_id | wymagany | wartośc pomiaru | |
+| date | wymagany | data pomiaru | |
+
+
+```javascript
+{
+    sensor_id : [long],
+    value : [string],
+    date : [string]
+    
+}
+```
+
+Statusy odpowiedzi:
+* 201 utworzono pomiar złożony
+* 400 brak wymaganych danych
+* 404 nie znaleziono sensora lub pomiaru o podanym id
+
 
 ### Utworzenie nowego pomiaru złożonego
-POST /resources/{resource_id}/measurements
+POST /measurements/complex
 
 Parametry:
 
 | Nazwa | Wymagany | Opis | Domyślnie |
 |-------|----------|------|-----------|
 | measurements_id | wymagany | id pomiaru, na podstawie którego tworzony jest pomiar zlozony | |
+| time-from | opcjonalny | pomiary starsze niż podana data | |
+| time-to | opcjonalny | pomiary młodsze niż podana data | |
 | jwt | wymagany | JSON Web Token | |
 
 
 ```javascript
 {
     measurements_id : [long],
+    time-from: [string],
+    time-to: [string],
     jwt : [string]
 }
 ```
 
+Odpowiedź:
+
+| Nazwa | Wymagany | Opis | Domyślnie |
+|-------|----------|------|-----------|
+| measurement_id | wymagany | id nowo utworzonego pomiaru | |
+
+
+```javascript
+{
+    measurement_id: [long]
+}    
+```    
+
 Statusy odpowiedzi:
 * 201 utworzono pomiar złożony
-* 404 nie znaleziono zasobu lub pomiaru o podanym id
+* 404 nie znaleziono pomiaru o podanym id
 * 401 brak autoryzacji uzytkownika
 
-Publikuj nowy pomiar zlozony
 
 ### Usuniecie pomiaru złożonego
-DELETE /resources/{resource_id}/measurements/{measurements_id}
+DELETE /measurements/complex/{measurements_id}
 
 Parametry:
 
@@ -343,7 +316,7 @@ Parametry:
 
 Statusy odpowiedzi:
 * 200 usunieto pomiar pomyslnie
-* 404 nie znaleziono pomiaru lub zasobu o podanym id
+* 404 nie znaleziono pomiaru o podanym id
 * 401 brak autoryzacji uzytkownika
 * 403 uzytkownik nie ma odpowiednich uprawnien do usuniecia pomiaru
 * 409 pomiar nie jest pomiarem zlozonym

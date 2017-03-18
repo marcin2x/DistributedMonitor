@@ -1,6 +1,6 @@
-#Autoryzacja
+# Autoryzacja
 
-###Logowanie
+### Logowanie
 POST /login
 
 Parametry:
@@ -16,7 +16,7 @@ Odpowiedz:
     api-key : [string]
 }
 
-###Wylogowanie
+### Wylogowanie
 POST /logout
 
 Parametry:
@@ -25,7 +25,7 @@ Parametry:
     api-key:[string]
 }
 
-###Tworzenie nowego uzytkownika
+### Tworzenie nowego uzytkownika
 POST /register
 
 Parametry:
@@ -36,12 +36,12 @@ Parametry:
     password_confirmation : [string]
 }
 
-#Operacja na zasobach
+# Operacja na zasobach
 
 
-##Zasoby
+## Zasoby
 
-###Pobranie listy zasobów(monitorów)
+### Pobranie listy zasobów(monitorów)
 GET /resources
 
 Zwraca liste zasobóow.
@@ -54,9 +54,9 @@ Parametry:
 | count | opcjonalny | ilosc zasobów | 50 |
 
 
-##Pomiary
+## Pomiary
 
-###Pobranie pomiarów dla wybranego zasobu(monitora)
+### Pobranie pomiarów dla wybranego zasobu(monitora)
 GET /resources/{resource_id}/measurements
 
 Zwraca liste pomiarów dla podanego zasobu.
@@ -68,7 +68,7 @@ Parametry:
 | names | opcjonalny | nazwa poszukiwanych pomiarów | |
 | count | opcjonalny | ilosc pomiarów | 50 |
 
-###Utworzenie nowego pomiaru złożonego
+### Utworzenie nowego pomiaru złożonego
 POST /resources/{resource_id}/measurements
 
 Parametry:
@@ -79,7 +79,7 @@ Parametry:
 
 Publikuj nowy pomiar zlozony
 
-###Usuniecie pomiaru złożonego
+### Usuniecie pomiaru złożonego
 DELETE /resources/{resource_id}/measurements/{measurements_id}
 
 usuwa dany pomiar zlozony

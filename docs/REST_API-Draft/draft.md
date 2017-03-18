@@ -17,6 +17,10 @@ Parametry:
 }
 ```
 Odpowiedz:
+
+| Nazwa | Wymagany | Opis | Domyślnie |
+|-------|----------|------|-----------|
+| api-key | wymagany | klucz wykorzystywany do niektorych zapytań | |
 ```javascript
 {
     api-key : [string]
@@ -88,6 +92,13 @@ Parametry:
 | count | opcjonalny | ilosc zasobów | 50 |
 
 Odpowiedź:
+
+| Nazwa | Wymagany | Opis | Domyślnie |
+|-------|----------|------|-----------|
+| id | wymagany | id monitora | |
+| name | wymagany | nazwa monitora | 50 |
+
+
 ```javascript
 {
     [
@@ -120,6 +131,14 @@ Parametry:
 | count | opcjonalny | ilosc pomiarów | 50 |
 
 Odpowiedź:
+
+| Nazwa | Wymagany | Opis | Domyślnie |
+|-------|----------|------|-----------|
+| id | wymagany | id pomiaru | |
+| resource_id | wymagany | id monitora z ktorego pochodzi pomiar | |
+| name | wymagany | nazwa pomiaru |  |
+
+
 ```javascript
 {
     [
@@ -148,6 +167,12 @@ Parametry:
 | count | opcjonalny | ilosc pomiarów | 50 |
 
 Odpowiedź:
+
+| Nazwa | Wymagany | Opis | Domyślnie |
+|-------|----------|------|-----------|
+| id | wymagany | id pomiaru | |
+| name | wymagany | nazwa pomiaru |  |
+
 ```javascript
 {
     [
@@ -183,6 +208,16 @@ Parametry:
 | count | opcjonalny | ilosc pomiarów | 50 |
 
 Odpowiedź:
+
+| Nazwa | Wymagany | Opis | Domyślnie |
+|-------|----------|------|-----------|
+| resource_id | wymagany | id monitora | |
+| resource_name | wymagany | nazwa monitora |  |
+| measurment_id | wymagany | id pomiaru |  |
+| measurment_name | wymagany | nazwa pomiaru |  |
+| value | wymagany | wartość pomiaru |  |
+| date | wymagany | data pomiaru |  |
+
 ```javascript
 {
     [ 

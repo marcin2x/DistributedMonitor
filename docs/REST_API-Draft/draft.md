@@ -20,10 +20,10 @@ Odpowiedz:
 
 | Nazwa | Wymagany | Opis | Domyślnie |
 |-------|----------|------|-----------|
-| api-key | wymagany | klucz wykorzystywany do niektorych zapytań | |
+| jwt | wymagany | JSON Web Token | |
 ```javascript
 {
-    api-key : [string]
+    jwt : [string]
 }
 ```
 
@@ -40,11 +40,11 @@ Parametry:
 
 | Nazwa | Wymagany | Opis | Domyślnie |
 |-------|----------|------|-----------|
-| api-key | wymagany | aktualny klucz użytkownika | |
+| api-key | wymagany | JSON Web Token | |
 
 ```javascript
 {
-    api-key:[string]
+    jwt:[string]
 }
 ```
 
@@ -90,6 +90,7 @@ Parametry:
 |-------|----------|------|-----------|
 | names | opcjonalny | nazwa poszukiwanych zasobów | |
 | count | opcjonalny | ilosc zasobów | 50 |
+| offset | opcjonalny | ilosc ignorowanych pierwszych wyników(do stronnicowania) | 0 |
 
 Odpowiedź:
 
@@ -129,6 +130,7 @@ Parametry:
 | names | opcjonalny | nazwa poszukiwanych pomiarów | |
 | resource-names | opcjonalny | nazwa przeszukiwanych zasobów | |
 | count | opcjonalny | ilosc pomiarów | 50 |
+| offset | opcjonalny | ilosc ignorowanych pierwszych wyników(do stronnicowania) | 0 |
 
 Odpowiedź:
 
@@ -165,6 +167,7 @@ Parametry:
 |-------|----------|------|-----------|
 | names | opcjonalny | nazwa poszukiwanych pomiarów | |
 | count | opcjonalny | ilosc pomiarów | 50 |
+| offset | opcjonalny | ilosc ignorowanych pierwszych wyników(do stronnicowania) | 0 |
 
 Odpowiedź:
 
@@ -206,6 +209,7 @@ Parametry:
 | time-from | opcjonalny | pomiary starsze niż podana data | |
 | time-to | opcjonalny | pomiary młodsze niż podana data | |
 | count | opcjonalny | ilosc pomiarów | 50 |
+| offset | opcjonalny | ilosc ignorowanych pierwszych wyników(do stronnicowania) | 0 |
 
 Odpowiedź:
 
@@ -311,11 +315,13 @@ Parametry:
 | Nazwa | Wymagany | Opis | Domyślnie |
 |-------|----------|------|-----------|
 | measurements_id | wymagany | id pomiaru, na podstawie którego tworzony jest pomiar zlozony | |
+| jwt | wymagany | JSON Web Token | |
 
 
 ```javascript
 {
-    measurements_id : [long]   
+    measurements_id : [long],
+    jwt : [string]
 }
 ```
 
@@ -328,6 +334,12 @@ Publikuj nowy pomiar zlozony
 
 ### Usuniecie pomiaru złożonego
 DELETE /resources/{resource_id}/measurements/{measurements_id}
+
+Parametry:
+
+| Nazwa | Wymagany | Opis | Domyślnie |
+|-------|----------|------|-----------|
+| jwt | wymagany | JSON Web Token | |
 
 Statusy odpowiedzi:
 * 200 usunieto pomiar pomyslnie

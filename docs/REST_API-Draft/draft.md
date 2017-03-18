@@ -118,9 +118,7 @@ Parametry:
 | Nazwa | Wymagany | Opis | Domyślnie |
 |-------|----------|------|-----------|
 | names | opcjonalny | nazwa poszukiwanych pomiarów | |
-| measurement_names | opcjonalny | nazwa poszukiwanych pomiarów | |
-| time-from | opcjonalny | pomiary starsze niż podana data | |
-| time-to | opcjonalny | pomiary młodsze niż podana data | |
+| resource-names | opcjonalny | nazwa przeszukiwanych zasobów | |
 | count | opcjonalny | ilosc pomiarów | 50 |
 
 Odpowiedź:
@@ -131,15 +129,11 @@ Odpowiedź:
             id: [long],
             resource_id: [long],
             name : [string],
-            value: [string],
-            date: [string]
         },
         {
             id: [long],
             resource_id: [long],
             name : [string],
-            value: [string],
-            date: [string]
         },
     ]
 }
@@ -153,8 +147,6 @@ Parametry:
 | Nazwa | Wymagany | Opis | Domyślnie |
 |-------|----------|------|-----------|
 | names | opcjonalny | nazwa poszukiwanych pomiarów | |
-| time-from | opcjonalny | pomiary starsze niż podana data | |
-| time-to | opcjonalny | pomiary młodsze niż podana data | |
 | count | opcjonalny | ilosc pomiarów | 50 |
 
 Odpowiedź:
@@ -164,14 +156,10 @@ Odpowiedź:
         {
             id: [long],
             name : [string],
-            value: [string],
-            date: [string]
         },
         {
             id: [long],
             name : [string],
-            value: [string],
-            date: [string]
         },
     ]
 }
@@ -180,6 +168,108 @@ Odpowiedź:
 Statusy odpowiedzi:
 * 200 pobrano pomiary
 * 404 nie znaleziono zasobu o podanym id
+
+
+
+### Pobranie wartości pomiarów
+GET /resources/measurements/values
+
+Parametry:
+
+| Nazwa | Wymagany | Opis | Domyślnie |
+|-------|----------|------|-----------|
+| resource-names | opcjonalny | nazwa poszukiwanych zasobow | |
+| measurement-names | opcjonalny | nazwa poszukiwanych pomiarów | |
+| time-from | opcjonalny | pomiary starsze niż podana data | |
+| time-to | opcjonalny | pomiary młodsze niż podana data | |
+| count | opcjonalny | ilosc pomiarów | 50 |
+
+Odpowiedź:
+```javascript
+{
+    [ 
+        {
+            resource_id: [long],
+            resource_name : [string],
+            measurments : 
+            [                          
+                {
+                    measurment_id: [long],
+                    measurment_name : [string], 
+                    values : 
+                    [
+                        {
+                            value: [string],
+                            date: [string]
+                        },
+                        {
+                            value: [string],
+                            date: [string]
+                        }
+                    ]
+                },
+                {
+                    measurment_id: [long],
+                    measurment_name : [string], 
+                    values : 
+                    [
+                        {
+                            value: [string],
+                            date: [string]
+                        },
+                        {
+                            value: [string],
+                            date: [string]
+                        }
+                    ]
+                }                          
+            ]
+        }, 
+        {
+            resource_id: [long],
+            resource_name : [string],
+            measurments : 
+            [                          
+                {
+                    measurment_id: [long],
+                    measurment_name : [string], 
+                    values : 
+                    [
+                        {
+                            value: [string],
+                            date: [string]
+                        },
+                        {
+                            value: [string],
+                            date: [string]
+                        }
+                    ]
+                },
+                {
+                    measurment_id: [long],
+                    measurment_name : [string], 
+                    values : 
+                    [
+                        {
+                            value: [string],
+                            date: [string]
+                        },
+                        {
+                            value: [string],
+                            date: [string]
+                        }
+                    ]
+                }                          
+            ]
+        },
+    ]
+}
+```
+
+Statusy odpowiedzi:
+* 200 pobrano pomiary
+* 404 nie znaleziono zasobu o podanym id
+
 
 ### Utworzenie nowego pomiaru złożonego
 POST /resources/{resource_id}/measurements

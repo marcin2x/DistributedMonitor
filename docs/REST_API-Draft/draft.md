@@ -40,7 +40,7 @@ Parametry:
 
 | Nazwa | Wymagany | Opis | Domyślnie |
 |-------|----------|------|-----------|
-| api-key | wymagany | JSON Web Token | |
+| jwt | wymagany | JSON Web Token | |
 
 ```javascript
 {

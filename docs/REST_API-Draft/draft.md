@@ -321,3 +321,40 @@ Statusy odpowiedzi:
 * 401 brak autoryzacji uzytkownika
 * 403 uzytkownik nie ma odpowiednich uprawnien do usuniecia pomiaru
 * 409 pomiar nie jest pomiarem zlozonym
+
+### Pobranie sensorow 
+GET /sensors
+
+Parametry:
+
+| Nazwa | Wymagany | Opis | Domyślnie |
+|-------|----------|------|-----------|
+| names | opcjonalny | nazwa poszukiwanych sensorow | |
+| count | opcjonalny | ilosc sensorow | 50 |
+| offset | opcjonalny | ilosc ignorowanych pierwszych wyników(do stronnicowania) | 0 |
+
+Odpowiedź:
+
+| Nazwa | Wymagany | Opis | Domyślnie |
+|-------|----------|------|-----------|
+| id | wymagany | id sensora | |
+| name | wymagany | nazwa sensora |  |
+
+
+```javascript
+{
+    [
+        {
+            id: [long],
+            name : [string],
+        },
+        {
+            id: [long],
+            name : [string],
+        },
+    ]
+}
+```
+
+Statusy odpowiedzi:
+* 200 pobrano sensory

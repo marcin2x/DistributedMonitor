@@ -87,7 +87,6 @@ Parametry:
 | Nazwa | Wymagany | Opis | Domyślnie |
 |-------|----------|------|-----------|
 | names | opcjonalny | nazwa poszukiwanych zasobów | |
-| measurement_names | opcjonalny | nazwa poszukiwanych pomiarów | |
 | count | opcjonalny | ilosc zasobów | 50 |
 
 Odpowiedź:
@@ -119,6 +118,7 @@ Parametry:
 | Nazwa | Wymagany | Opis | Domyślnie |
 |-------|----------|------|-----------|
 | names | opcjonalny | nazwa poszukiwanych pomiarów | |
+| measurement_names | opcjonalny | nazwa poszukiwanych pomiarów | |
 | time-from | opcjonalny | pomiary starsze niż podana data | |
 | time-to | opcjonalny | pomiary młodsze niż podana data | |
 | count | opcjonalny | ilosc pomiarów | 50 |

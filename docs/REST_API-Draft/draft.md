@@ -4,10 +4,12 @@
 POST /login
 
 Parametry:
+
 | Nazwa | Wymagany | Opis | Domyślnie |
 |-------|----------|------|-----------|
 | login | wymagany | login uzytkownika | |
 | password | wymagany | hasło uzytkownika | |
+
 ```javascript
 {
     login : [string],
@@ -29,11 +31,13 @@ Statusy odpowiedzi:
 ### Wylogowanie
 POST /logout
 
+
+Parametry:
+
 | Nazwa | Wymagany | Opis | Domyślnie |
 |-------|----------|------|-----------|
 | api-key | wymagany | aktualny klucz użytkownika | |
 
-Parametry:
 ```javascript
 {
     api-key:[string]

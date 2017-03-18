@@ -171,8 +171,9 @@ Parametry:
 }
 ```
 Statusy odpowiedzi:
-* 20 zaktualizowano metadane sensora
+* 200 zaktualizowano metadane sensora
 * 404 sensor lub pomiar o podanym id nie istnieje
+* 403 pomiar o danym id nie nalezy do podanego sensora
 
 ### Pobranie wartości pomiarów
 GET /measurements/values
@@ -306,7 +307,7 @@ Statusy odpowiedzi:
 
 
 ### Usuniecie pomiaru złożonego
-DELETE /measurements/complex/{measurements_id}
+DELETE /measurements/{measurements_id}
 
 Parametry:
 

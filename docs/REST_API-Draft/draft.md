@@ -80,8 +80,6 @@ Statusy odpowiedzi:
 ### Pobranie listy zasobów(monitorów)
 GET /resources
 
-Zwraca liste zasobów.
-
 Parametry:
 
 | Nazwa | Wymagany | Opis | Domyślnie |
@@ -268,13 +266,18 @@ Odpowiedź:
 
 Statusy odpowiedzi:
 * 200 pobrano pomiary
-* 404 nie znaleziono zasobu o podanym id
 
 
 ### Utworzenie nowego pomiaru złożonego
 POST /resources/{resource_id}/measurements
 
 Parametry:
+
+| Nazwa | Wymagany | Opis | Domyślnie |
+|-------|----------|------|-----------|
+| measurements_id | wymagany | id pomiaru, na podstawie którego tworzony jest pomiar zlozony | |
+
+
 ```javascript
 {
     measurements_id : [long]   
@@ -283,7 +286,7 @@ Parametry:
 
 Statusy odpowiedzi:
 * 201 utworzono pomiar złożony
-* 404 nie znaleziono zasobu o podanym id
+* 404 nie znaleziono zasobu lub pomiaru o podanym id
 * 401 brak autoryzacji uzytkownika
 
 Publikuj nowy pomiar zlozony

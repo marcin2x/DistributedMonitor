@@ -94,4 +94,4 @@ ENV/
 app/node_modules
 app/src/components
 app/src/css
-app/app.js
+app/src/app.js

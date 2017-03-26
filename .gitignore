@@ -88,3 +88,10 @@ ENV/
 # Rope project settings
 .ropeproject
 /.idea
+
+
+#webapp
+app/node_modules
+app/src/components
+app/src/css
+app/app.js

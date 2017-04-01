@@ -51,6 +51,115 @@ Statusy odpowiedzi:
 * 200 wylogowanie powiodlo sie
 * 400 brak wymaganych parametrow
 
+
+### Pobranie monitorów 
+GET /monitors
+
+Nalezy dołączyć nagłówek:
+
+"Authorization" : [jwt]
+
+jwt - JSON Web Token
+
+Parametry:
+
+| Nazwa | Wymagany | Opis | Domyślnie |
+|-------|----------|------|-----------|
+| count | opcjonalny | ilosc monitorów | 50 |
+| offset | opcjonalny | ilosc ignorowanych pierwszych wyników(do stronnicowania) | 0 |
+
+Odpowiedź:
+
+| Nazwa | Wymagany | Opis | Domyślnie |
+|-------|----------|------|-----------|
+| adres | wymagany | adres monitora | |
+| port | wymagany | port monitora |  |
+| name | wymagany | nazwa monitora |  |
+| id | wymagany | id monitora |  |
+| user_id | wymagany | id uzytkownika |  |
+
+
+```javascript
+{
+    [
+        {
+            id: [long],
+            user_id: [long],
+            name : [string],
+            port : [string],
+            adres : [string]
+        },
+        {
+            id: [long],
+            user_id: [long],
+            name : [string],
+            port : [string],
+            adres : [string]
+        },
+    ]
+}
+```
+
+Statusy odpowiedzi:
+* 200 pobrano monitory
+* 401 brak autoryzacji uzytkownika
+
+### Utworzenie nowego monitora
+POST /monitors
+
+Nalezy dołączyć nagłówek:
+
+"Authorization" : [jwt]
+
+jwt - JSON Web Token
+
+Parametry:
+
+| Nazwa | Wymagany | Opis | Domyślnie |
+|-------|----------|------|-----------|
+| monitor | wymagany | obiekt zawierajacy wszystkie dane monitora | |
+
+
+```javascript
+{
+    monitor : [object]
+}
+```
+
+Odpowiedź:
+
+| Nazwa | Wymagany | Opis | Domyślnie |
+|-------|----------|------|-----------|
+| monitor_id | wymagany | id nowo utworzonego monitora | |
+
+
+```javascript
+{
+    measurement_id: [long]
+}    
+``` 
+
+Statusy odpowiedzi:
+* 201 utworzono monitor
+* 409 monitor juz istnieje
+* 401 brak autoryzacji uzytkownika
+
+### Usuniecie monitora
+DELETE /monitors/{monitors_id}
+
+Nalezy dołączyć nagłówek:
+
+"Authorization" : [jwt]
+
+jwt - JSON Web Token
+
+Statusy odpowiedzi:
+* 200 usunieto monitor pomyslnie
+* 404 nie znaleziono monitora o podanym id
+* 401 brak autoryzacji uzytkownika
+* 403 uzytkownik nie ma odpowiednich uprawnien do usuniecia monitora
+
+
 # Operacja na zasobach
 ## Pomiary
 

@@ -156,6 +156,60 @@ Statusy odpowiedzi:
 # Operacja na zasobach
 ## Pomiary
 
+### Pobranie pomiarów złożonych
+GET /measurements
+
+Parametry:
+
+| Nazwa | Wymagany | Opis | Domyślnie |
+|-------|----------|------|-----------|
+| names | opcjonalny | nazwa poszukiwanych pomiarów | |
+| count | opcjonalny | ilosc pomiarów | 50 |
+| offset | opcjonalny | ilosc ignorowanych pierwszych wyników(do stronnicowania) | 0 |
+
+Odpowiedź:
+
+| Nazwa | Wymagany | Opis | Domyślnie |
+|-------|----------|------|-----------|
+| id | wymagany | id pomiaru | |
+| name | wymagany | nazwa pomiaru |  |
+| type | wymagany | typ zlozonego pomiaru(avg, min, max) | |
+| interval | wymagany | co ile minut obliczany pomiar złożony | |
+| time-from | wymagany | pomiary starsze niż podana data | |
+| time-to | wymagany | pomiary młodsze niż podana data | |
+| pattern | wymagany | nazwa pomiaru, z którego tworzony jest pomiar złożony | |
+| sensors_id | opcjonalny | id sensorow, z których pobierac pomiary | |
+
+
+```javascript
+{
+    [
+        {
+            id: [long],
+            name : [string],
+			type : [string],
+			interval : [long],
+			time-from: [string],
+			time-to: [string],
+			pattern: [string],
+			sensors_id: [longs]
+        },
+        {
+            id: [long],
+            name : [string],
+			type : [string],
+			interval : [long],
+			time-from: [string],
+			time-to: [string],
+			pattern: [string],
+			sensors_id: [longs]
+        },
+    ]
+}
+```
+
+Statusy odpowiedzi:
+* 200 pobrano pomiary złożone
 
 ### Pobranie wartości pomiarów
 GET /measurements/values

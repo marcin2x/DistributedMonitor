@@ -50,8 +50,8 @@ jwt - JSON Web Token
 Statusy odpowiedzi:
 * 200 wylogowanie powiodlo sie
 * 400 brak wymaganych parametrow
-## Monitory
 
+## Monitory
 ### Pobranie monitorów 
 GET /monitors
 

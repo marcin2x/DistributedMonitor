@@ -41,15 +41,8 @@ Nalezy dołączyć nagłówek:
 
 jwt - JSON Web Token
 
-```javascript
-{
-    jwt:[string]
-}
-```
-
 Statusy odpowiedzi:
 * 200 wylogowanie powiodlo sie
-* 400 brak wymaganych parametrow
 
 ## Monitory
 ### Pobranie monitorów 

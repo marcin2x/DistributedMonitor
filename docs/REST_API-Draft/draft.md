@@ -50,7 +50,7 @@ jwt - JSON Web Token
 Statusy odpowiedzi:
 * 200 wylogowanie powiodlo sie
 * 400 brak wymaganych parametrow
-
+## Monitory
 
 ### Pobranie monitorów 
 GET /monitors
@@ -163,43 +163,6 @@ Statusy odpowiedzi:
 # Operacja na zasobach
 ## Pomiary
 
-### Pobranie pomiarów 
-GET /measurements
-
-Parametry:
-
-| Nazwa | Wymagany | Opis | Domyślnie |
-|-------|----------|------|-----------|
-| names | opcjonalny | nazwa poszukiwanych pomiarów | |
-| count | opcjonalny | ilosc pomiarów | 50 |
-| offset | opcjonalny | ilosc ignorowanych pierwszych wyników(do stronnicowania) | 0 |
-
-Odpowiedź:
-
-| Nazwa | Wymagany | Opis | Domyślnie |
-|-------|----------|------|-----------|
-| id | wymagany | id pomiaru | |
-| name | wymagany | nazwa pomiaru |  |
-
-
-```javascript
-{
-    [
-        {
-            id: [long],
-            name : [string],
-        },
-        {
-            id: [long],
-            name : [string],
-        },
-    ]
-}
-```
-
-Statusy odpowiedzi:
-* 200 pobrano pomiary
-
 
 ### Pobranie wartości pomiarów
 GET /measurements/values
@@ -209,16 +172,18 @@ Parametry:
 | Nazwa | Wymagany | Opis | Domyślnie |
 |-------|----------|------|-----------|
 | measurement-names | opcjonalny | nazwa poszukiwanych pomiarów | |
+| sensor-names | opcjonalny | nazwa sensorów, z których pochodzi pomiar | |
 | time-from | opcjonalny | pomiary starsze niż podana data | |
 | time-to | opcjonalny | pomiary młodsze niż podana data | |
 | count | opcjonalny | ilosc pomiarów | 50 |
 | offset | opcjonalny | ilosc ignorowanych pierwszych wyników(do stronnicowania) | 0 |
+| only_complex | opcjonalny | tylko pomiary złożone | false |
 
 Odpowiedź:
 
 | Nazwa | Wymagany | Opis | Domyślnie |
 |-------|----------|------|-----------|
-| measurment_id | wymagany | id pomiaru |  |
+| sensor-name | wymagany | nazwa sensora |  |
 | measurment_name | wymagany | nazwa pomiaru |  |
 | value | wymagany | wartość pomiaru |  |
 | date | wymagany | data pomiaru |  |
@@ -228,34 +193,16 @@ Odpowiedź:
     [     
                                      
         {
-            measurment_id: [long],
-            measurment_name : [string], 
-            values : 
-            [
-                {
-                    value: [string],
-                    date: [string]
-                },
-                {
-                    value: [string],
-                    date: [string]
-                }
-            ]
+            sensor-name: [string],
+            measurment_name : [string],
+			value: [string],	
+            date: [string]
         },
         {
-            measurment_id: [long],
-            measurment_name : [string], 
-            values : 
-            [
-                {
-                    value: [string],
-                    date: [string]
-                },
-                {
-                    value: [string],
-                    date: [string]
-                }
-            ]
+            sensor-name: [string],
+            measurment_name : [string],
+			value: [string],	
+            date: [string]
         }   
     ]
 }
@@ -318,16 +265,24 @@ Parametry:
 
 | Nazwa | Wymagany | Opis | Domyślnie |
 |-------|----------|------|-----------|
-| measurements_id | wymagany | id pomiaru, na podstawie którego tworzony jest pomiar zlozony | |
-| time-from | opcjonalny | pomiary starsze niż podana data | |
-| time-to | opcjonalny | pomiary młodsze niż podana data | |
+| name | wymagany | unikalna nazwa nowo tworzonego pomiaru | |
+| type | wymagany | typ zlozonego pomiaru(avg, min, max) | |
+| interval | wymagany | co ile minut obliczac pomiar | |
+| time-from | wymagany | pomiary starsze niż podana data | |
+| time-to | wymagany | pomiary młodsze niż podana data | |
+| pattern | wymagany | nazwa pomiaru, z którego tworzony jest pomiar złożony | |
+| sensors_id | opcjonalny | id sensorow, z których pobierac pomiary | |
 
 
 ```javascript
 {
-    measurements_id : [long],
+    name : [string],
+    type : [string],
+    interval : [long],
     time-from: [string],
-    time-to: [string]
+    time-to: [string],
+    pattern: [string],
+    sensors_id: [longs]
 }
 ```
 
@@ -346,7 +301,7 @@ Odpowiedź:
 
 Statusy odpowiedzi:
 * 201 utworzono pomiar złożony
-* 404 nie znaleziono pomiaru o podanym id
+* 404 nie znaleziono pomiaru o podanej nazwie
 * 401 brak autoryzacji uzytkownika
 
 

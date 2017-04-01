@@ -179,6 +179,8 @@ Odpowiedź:
 | time-to | wymagany | pomiary młodsze niż podana data | |
 | pattern | wymagany | nazwa pomiaru, z którego tworzony jest pomiar złożony | |
 | sensors_id | opcjonalny | id sensorow, z których pobierac pomiary | |
+| user_id | wymagany | id użytkownika do którego należy pomiar | |
+| sensors_id | opcjonalny | id sensorow, z których pobierac pomiary | |
 
 
 ```javascript
@@ -192,7 +194,8 @@ Odpowiedź:
 			time-from: [string],
 			time-to: [string],
 			pattern: [string],
-			sensors_id: [longs]
+			sensors_id: [longs],
+			user_id: [long]
         },
         {
             id: [long],
@@ -202,7 +205,8 @@ Odpowiedź:
 			time-from: [string],
 			time-to: [string],
 			pattern: [string],
-			sensors_id: [longs]
+			sensors_id: [longs],
+			user_id: [long]
         },
     ]
 }

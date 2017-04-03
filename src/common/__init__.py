@@ -1,0 +1,1 @@
+from src.common.authconfig import *

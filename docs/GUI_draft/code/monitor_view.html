@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Startmin - Bootstrap Admin Theme</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="css/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Timeline CSS -->
+    <link href="css/timeline.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/startmin.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="css/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <link href="css/custom_style.css" rel="stylesheet" type="text/css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="menu">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">DIstributedMonitor</a>
+            </div>
+
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <!-- Top Navigation: Left Menu -->
+            <ul class="nav navbar-nav navbar-left navbar-top-links">
+                <li><a href="#"><i class="fa fa-home fa-fw"></i> github</a></li>
+            </ul>
+
+            <!-- Top Navigation: Right Menu -->
+            <ul class="nav navbar-right navbar-top-links">
+                <li class="dropdown navbar-inverse">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-bell fa-fw"></i> <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu dropdown-alerts">
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <i class="fa fa-comment fa-fw"></i> Nowy pomiar złożony
+                                    <span class="pull-right text-muted small">4 minutes ago</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="text-center" href="#">
+                                <strong>Zobacz wszystkie</strong>
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i> admin <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                    </li>
+                    <li class="divider"></li>
+                    <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        <!-- Sidebar -->
+        <div class="navbar-default sidebar" role="navigation">
+            <div class="sidebar-nav navbar-collapse">
+
+                <ul class="nav" id="side-menu">
+                    <li class="sidebar-search">
+                        <div class="input-group custom-search-form">
+                            <input type="text" class="form-control" placeholder="Search...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="index.html" class="active"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-sitemap fa-fw"></i> Monitors <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+
+                            <li>
+                                <a href="#" onclick="openAddMonitor()">Add new monitor</a>
+                            </li>
+
+                            <li>
+                                <a href="#">Available monitors<span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level">
+                                    <li>
+                                        <a href="monitor_view.html">Monitor 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="monitor_view.html">Monitor 2</a>
+                                    </li>
+                                    <li>
+                                        <a href="monitor_view.html">Monitor 3</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div id="page-wrapper">
+        <div class="container-fluid">
+        <div id="addMonitor" class="overlay">
+          <div class="overlay-content">
+            <div class="row">
+                    <div class="col-lg-4">
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                            <div class="row">
+                            <div class="col-lg-10">
+                                <h2 class="text-left"> 
+                                    <i class="fa fa-fw" aria-hidden="true" title="Copy to use chevron-down">&#xf078</i>
+                                    Add new monitor 
+                                </h2>
+                            </div>
+                            <div class="col-lg-2 text-right">
+                             <a href="javascript:void(0)" onclick="closeAddMonitor()">&times;</a>
+                            </div>
+                            </div>
+                            </div>
+                            <div class="panel-body">
+                            <form role="form">
+                            <div class="form-group text-left">
+                              <label>Monitor name</label>
+                              <input class="form-control" placeholder="Monitor name">
+                            </div>
+                            <div class="form-group text-left">
+                              <label>Monitor address:</label>
+                              <input class="form-control" placeholder="Monitor ip address">
+                            </div>
+                            </form>
+                            </div>
+                            <div class="panel-footer">
+                              <button type="submit" class="btn btn-primary" onclick="closeAddMonitor()">Add monitor</button>
+                            </div>
+                        </div>
+                    </div>                
+            </div>
+          </div>
+        </div>
+
+        <div id="addComplex" class="overlay">
+          
+          <div class="overlay-content">
+            <div class="row">
+                    <div class="col-lg-4">
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                            <div class="row">
+                            <div class="col-lg-10">
+                                <h2 class="text-left"> 
+                                    <i class="fa fa-fw" aria-hidden="true" title="Copy to use chevron-down">&#xf078</i>
+                                    Add new complex measurement 
+                                </h2>
+                            </div>
+                            <div class="col-lg-2 text-right">
+                             <a href="javascript:void(0)" onclick="closeComplex()">&times;</a>
+                            </div>
+                            </div>
+                            </div>
+                            <div class="panel-body">
+                            <form role="form">
+                            <div class="form-group text-left">
+                              <label>Measure name</label>
+                              <input class="form-control" placeholder="Measure name">
+                            </div>
+                            <div class="form-group  text-left">
+                              <label>Sensor name</label>
+                              <select class="form-control">
+                                <option>CPU Usage</option>
+                                <option>RAM Usage</option>
+                                <option>DISK</option>
+                              </select>
+                            </div>
+                            <div class="form-group text-left">
+                              <label>Aggregation period</label>
+                              <input class="form-control"  type="number" placeholder="">
+                            </div>
+                            </form>
+                            </div>
+                            <div class="panel-footer">
+                              <button type="submit" class="btn btn-primary" onclick="closeComplex()">Add measurement</button>
+                            </div>
+                        </div>
+                    </div>                
+            </div>
+          </div>
+        </div>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <h1 class="page-header">Monitor 1</h1>
+                </div>
+                <div class="col-lg-6">
+                    <h1 class="page-header"> 
+                        <button type="button" class="btn btn-danger"> Delete monitor </button>
+                        <button type="button" class="btn btn-success" onclick="openComplex()"> Add complex measurement </button>
+                    </h1>    
+                </div>
+            </div>
+
+
+
+            <div class="row" >
+                <div class="col-lg-12" style="display:none;">
+                    <div class="panel panel-default">
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="flot-chart">
+                                <div class="flot-chart-content" id="flot-line-chart"></div>
+                            </div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+                <div class="col-lg-6" style="display:none;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Pie Chart Example
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="flot-chart">
+                                <div class="flot-chart-content" id="flot-pie-chart"></div>
+                            </div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-6 -->
+                <div class="col-lg-6" style="display:none;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Multiple Axes Line Chart Example
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="flot-chart">
+                                <div class="flot-chart-content" id="flot-line-chart-multi"></div>
+                            </div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+
+                <div class="panel tabbed-panel panel-default">
+                    <div class="panel-heading clearfix">
+                        <div class="pull-right">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-xs dropdown-toggle"
+                                data-toggle="dropdown">
+                                Measurement
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li><a href="#">RAM Usage</a>
+                                </li>
+                                <li><a href="#">CPU usage</a>
+                                </li>
+                                <li><a href="#">ANOTHER</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li><a href="#">All</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="pull-left">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#tab-default-1" data-toggle="tab">JEZIOR PC</a></li>
+                            <li><a href="#tab-default-2" data-toggle="tab">LEŃCZYK PC</a></li>
+                            <li><a href="#tab-default-3" data-toggle="tab">GROCHOLA PC</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="tab-content">
+                        <div class="flot-chart">
+                            <div class="flot-chart-content" id="flot-line-chart-moving"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- /.panel -->
+        </div>
+
+
+
+        <!-- ... Your content goes here ... -->
+
+        <div class="row">
+            <div class="panel tabbed-panel panel-default">
+
+                <div class="pull-left">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#tab-default-1" data-toggle="tab">Simple measurement</a></li>
+                        <li><a href="#tab-default-2" data-toggle="tab">Complex measurement</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="panel-body">
+            <div class="tab-content">
+            <div class="tab-pane fade in active" id="tab-default-1">
+                <div class="dataTable_wrapper">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                            <tr>
+                                <th>Sensor name</th>
+                                <th>Measurement</th>
+                                <th>Value</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="odd gradeX">
+                                <td>LEŃCZYK PC</td>
+                                <td>RAM Usage</td>
+                                <td>99</td>
+                                <td class="center">4s ago</td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td>LEŃCZYK PC</td>
+                                <td>RAM Usage</td>
+                                <td>99</td>
+                                <td class="center">4s ago</td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td>LEŃCZYK PC</td>
+                                <td>RAM Usage</td>
+                                <td>99</td>
+                                <td class="center">4s ago</td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td>LEŃCZYK PC</td>
+                                <td>RAM Usage</td>
+                                <td>99</td>
+                                <td class="center">4s ago</td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td>LEŃCZYK PC</td>
+                                <td>RAM Usage</td>
+                                <td>99</td>
+                                <td class="center">4s ago</td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td>LEŃCZYK PC</td>
+                                <td>RAM Usage</td>
+                                <td>99</td>
+                                <td class="center">4s ago</td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td>LEŃCZYK PC</td>
+                                <td>RAM Usage</td>
+                                <td>99</td>
+                                <td class="center">4s ago</td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td>LEŃCZYK PC</td>
+                                <td>RAM Usage</td>
+                                <td>99</td>
+                                <td class="center">4s ago</td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td>LEŃCZYK PC</td>
+                                <td>RAM Usage</td>
+                                <td>99</td>
+                                <td class="center">4s ago</td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td>LEŃCZYK PC</td>
+                                <td>RAM Usage</td>
+                                <td>99</td>
+                                <td class="center">4s ago</td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td>LEŃCZYK PC</td>
+                                <td>RAM Usage</td>
+                                <td>99</td>
+                                <td class="center">4s ago</td>
+                            </tr>
+
+                            <tr class="odd gradeX">
+                                <td>JEZIOR PC</td>
+                                <td>CPU Usage</td>
+                                <td>99</td>
+                                <td class="center">4s ago</td>
+                            </tr>
+
+                            <tr class="odd gradeX">
+                                <td>JEZIOR PC</td>
+                                <td>CPU Usage</td>
+                                <td>99</td>
+                                <td class="center">4s ago</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.table-responsive -->
+                </div>
+                <div class="tab-pane fade" id="tab-default-2">
+                    <div class="dataTable_wrapper">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                            <tr>
+                                <th>Sensor name</th>
+                                <th>Measurement</th>
+                                <th>Perdiot of time</th>
+                                <th>Value</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="odd gradeX">
+                                <td>LEŃCZYK PC</td>
+                                <td>RAM Usage</td>
+                                <td>5 minutes</td>
+                                <td>99</td>
+                                <td class="center">4s ago</td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td>LEŃCZYK PC</td>
+                                <td>RAM Usage</td>
+                                <td>10 minutes</td>
+                                <td>99</td>
+                                <td class="center">4s ago</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.table-responsive -->
+
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<!-- jQuery -->
+<script src="js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script src="js/metisMenu.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="js/startmin.js"></script>
+<!-- Flot Charts JavaScript -->
+
+<!-- DataTables JavaScript -->
+<script src="js/dataTables/jquery.dataTables.min.js"></script>
+<script src="js/dataTables/dataTables.bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+
+    function openComplex() {
+          document.getElementById("addComplex").style.height = "100%";
+          document.getElementById("menu").style.display = "none";
+    }
+    function closeComplex() {
+              document.getElementById("addComplex").style.height = "0%";
+              document.getElementById("menu").style.display = "block";
+    }
+      function openAddMonitor() {
+          document.getElementById("addMonitor").style.height = "100%";
+          document.getElementById("menu").style.display = "none";
+      }
+      
+
+      function closeAddMonitor() {
+          document.getElementById("addMonitor").style.height = "0%";
+          document.getElementById("menu").style.display = "block";
+      }
+</script>
+
+
+<script src="js/flot/excanvas.min.js"></script>
+<script src="js/flot/jquery.flot.js"></script>
+<script src="js/flot/jquery.flot.pie.js"></script>
+<script src="js/flot/jquery.flot.resize.js"></script>
+<script src="js/flot/jquery.flot.time.js"></script>
+<script src="js/flot/jquery.flot.tooltip.min.js"></script>
+<script src="js/flot-data.js"></script>
+
+
+
+
+</body>
+</html>

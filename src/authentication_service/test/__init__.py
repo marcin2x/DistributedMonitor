@@ -1,0 +1,1 @@
+from src.authentication_service.test import auth_test

@@ -175,12 +175,9 @@ Odpowiedź:
 | name | wymagany | nazwa pomiaru |  |
 | type | wymagany | typ zlozonego pomiaru(avg, min, max) | |
 | interval | wymagany | co ile minut obliczany pomiar złożony | |
-| time-from | wymagany | pomiary starsze niż podana data | |
-| time-to | wymagany | pomiary młodsze niż podana data | |
-| pattern | wymagany | nazwa pomiaru, z którego tworzony jest pomiar złożony | |
-| sensors_id | opcjonalny | id sensorow, z których pobierac pomiary | |
+| window | wymagany | w jakim okresie tworzony byl pomiar | |
+| measurement_id | wymagany | id pomiaru z którego tworzony jest pomiar złożony | |
 | user_id | wymagany | id użytkownika do którego należy pomiar | |
-| sensors_id | opcjonalny | id sensorow, z których pobierac pomiary | |
 
 
 ```javascript
@@ -191,10 +188,8 @@ Odpowiedź:
             name : [string],
 			type : [string],
 			interval : [long],
-			time-from: [string],
-			time-to: [string],
-			pattern: [string],
-			sensors_id: [longs],
+			window : [date interval]
+			measurement_id : [long],
 			user_id: [long]
         },
         {
@@ -202,10 +197,8 @@ Odpowiedź:
             name : [string],
 			type : [string],
 			interval : [long],
-			time-from: [string],
-			time-to: [string],
-			pattern: [string],
-			sensors_id: [longs],
+			window : [date interval]
+			measurement_id : [long],
 			user_id: [long]
         },
     ]
@@ -223,7 +216,7 @@ Parametry:
 | Nazwa | Wymagany | Opis | Domyślnie |
 |-------|----------|------|-----------|
 | measurement-names | opcjonalny | nazwa poszukiwanych pomiarów | |
-| sensor-names | opcjonalny | nazwa sensorów, z których pochodzi pomiar | |
+| host-names | opcjonalny | nazwa hostów, z których pochodzi pomiar | |
 | time-from | opcjonalny | pomiary starsze niż podana data | |
 | time-to | opcjonalny | pomiary młodsze niż podana data | |
 | count | opcjonalny | ilosc pomiarów | 50 |
@@ -234,7 +227,7 @@ Odpowiedź:
 
 | Nazwa | Wymagany | Opis | Domyślnie |
 |-------|----------|------|-----------|
-| sensor-name | wymagany | nazwa sensora |  |
+| host-name | wymagany | nazwa hosta |  |
 | measurment_name | wymagany | nazwa pomiaru |  |
 | value | wymagany | wartość pomiaru |  |
 | date | wymagany | data pomiaru |  |
@@ -244,13 +237,13 @@ Odpowiedź:
     [     
                                      
         {
-            sensor-name: [string],
+            host-name: [string],
             measurment_name : [string],
 			value: [string],	
             date: [string]
         },
         {
-            sensor-name: [string],
+            host-name: [string],
             measurment_name : [string],
 			value: [string],	
             date: [string]
@@ -319,10 +312,7 @@ Parametry:
 | name | wymagany | unikalna nazwa nowo tworzonego pomiaru | |
 | type | wymagany | typ zlozonego pomiaru(avg, min, max) | |
 | interval | wymagany | co ile minut obliczac pomiar | |
-| time-from | wymagany | pomiary starsze niż podana data | |
-| time-to | wymagany | pomiary młodsze niż podana data | |
-| pattern | wymagany | nazwa pomiaru, z którego tworzony jest pomiar złożony | |
-| sensors_id | opcjonalny | id sensorow, z których pobierac pomiary | |
+| measurement_id | wymagany | id pomiaru z którego tworzony jest pomiar złożony | |
 
 
 ```javascript
@@ -330,10 +320,7 @@ Parametry:
     name : [string],
     type : [string],
     interval : [long],
-    time-from: [string],
-    time-to: [string],
-    pattern: [string],
-    sensors_id: [longs]
+    measurement_id : [long]
 }
 ```
 
@@ -371,3 +358,40 @@ Statusy odpowiedzi:
 * 401 brak autoryzacji uzytkownika
 * 403 uzytkownik nie ma odpowiednich uprawnien do usuniecia pomiaru
 * 409 pomiar nie jest pomiarem zlozonym
+
+### Pobranie sensorow 
+GET /hosts
+
+Parametry:
+
+| Nazwa | Wymagany | Opis | Domyślnie |
+|-------|----------|------|-----------|
+| names | opcjonalny | nazwa poszukiwanych hostów | |
+| count | opcjonalny | ilosc hostów | 50 |
+| offset | opcjonalny | ilosc ignorowanych pierwszych wyników(do stronnicowania) | 0 |
+
+Odpowiedź:
+
+| Nazwa | Wymagany | Opis | Domyślnie |
+|-------|----------|------|-----------|
+| id | wymagany | id hosta | |
+| name | wymagany | nazwa hosta |  |
+
+
+```javascript
+{
+    [
+        {
+            id: [long],
+            name : [string],
+        },
+        {
+            id: [long],
+            name : [string],
+        },
+    ]
+}
+```
+
+Statusy odpowiedzi:
+* 200 pobrano sensory

@@ -359,7 +359,7 @@ Statusy odpowiedzi:
 * 403 uzytkownik nie ma odpowiednich uprawnien do usuniecia pomiaru
 * 409 pomiar nie jest pomiarem zlozonym
 
-### Pobranie sensorow 
+### Pobranie hostów 
 GET /hosts
 
 Parametry:

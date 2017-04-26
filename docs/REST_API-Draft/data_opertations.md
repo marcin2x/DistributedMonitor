@@ -1,49 +1,3 @@
-# Autoryzacja
-
-### Logowanie
-POST /login
-
-Parametry:
-
-| Nazwa | Wymagany | Opis | Domyślnie |
-|-------|----------|------|-----------|
-| login | wymagany | login uzytkownika | |
-| password | wymagany | hasło uzytkownika | |
-
-```javascript
-{
-    login : [string],
-    password : [string]
-}
-```
-Odpowiedz:
-
-| Nazwa | Wymagany | Opis | Domyślnie |
-|-------|----------|------|-----------|
-| jwt | wymagany | JSON Web Token | |
-```javascript
-{
-    jwt : [string]
-}
-```
-
-Statusy odpowiedzi:
-* 200 logowanie powiodło się
-* 401 nieprawidłowe dane logowania
-* 400 brak wymaganych parametrow
-
-### Wylogowanie
-POST /logout
-
-Nalezy dołączyć nagłówek:
-
-"Authorization" : [jwt]
-
-jwt - JSON Web Token
-
-Statusy odpowiedzi:
-* 200 wylogowanie powiodlo sie
-
 ## Monitory
 ### Pobranie monitorów 
 GET /monitors
@@ -65,7 +19,7 @@ Odpowiedź:
 
 | Nazwa | Wymagany | Opis | Domyślnie |
 |-------|----------|------|-----------|
-| adres | wymagany | adres monitora | |
+| address | wymagany | adres monitora | |
 | port | wymagany | port monitora |  |
 | name | wymagany | nazwa monitora |  |
 | id | wymagany | id monitora |  |
@@ -80,14 +34,14 @@ Odpowiedź:
             user_id: [long],
             name : [string],
             port : [string],
-            adres : [string]
+            address : [string]
         },
         {
             id: [long],
             user_id: [long],
             name : [string],
             port : [string],
-            adres : [string]
+            address : [string]
         },
     ]
 }
@@ -110,12 +64,18 @@ Parametry:
 
 | Nazwa | Wymagany | Opis | Domyślnie |
 |-------|----------|------|-----------|
-| monitor | wymagany | obiekt zawierajacy wszystkie dane monitora | |
+| name | wymagany | nazwa monitora | |
+| port | wymagany | port monitora | |
+| address | wymagany | adres monitora | |
 
 
 ```javascript
 {
-    monitor : [object]
+    
+	name : [string],
+	port : [string],
+	address : [string]
+	
 }
 ```
 
@@ -128,7 +88,7 @@ Odpowiedź:
 
 ```javascript
 {
-    measurement_id: [long]
+    monitor_id : [long]
 }    
 ``` 
 
@@ -215,10 +175,10 @@ Parametry:
 
 | Nazwa | Wymagany | Opis | Domyślnie |
 |-------|----------|------|-----------|
-| measurement-names | opcjonalny | nazwa poszukiwanych pomiarów | |
-| host-names | opcjonalny | nazwa hostów, z których pochodzi pomiar | |
-| time-from | opcjonalny | pomiary starsze niż podana data | |
-| time-to | opcjonalny | pomiary młodsze niż podana data | |
+| measurement_id | opcjonalny | id poszukiwanego pomiarów | |
+| host_name | opcjonalny | nazwa hosta, z których pochodzi pomiar | |
+| time_from | opcjonalny | pomiary starsze niż podana data | |
+| time_to | opcjonalny | pomiary młodsze niż podana data | |
 | count | opcjonalny | ilosc pomiarów | 50 |
 | offset | opcjonalny | ilosc ignorowanych pierwszych wyników(do stronnicowania) | 0 |
 | only_complex | opcjonalny | tylko pomiary złożone | false |
@@ -227,8 +187,8 @@ Odpowiedź:
 
 | Nazwa | Wymagany | Opis | Domyślnie |
 |-------|----------|------|-----------|
-| host-name | wymagany | nazwa hosta |  |
-| measurment_name | wymagany | nazwa pomiaru |  |
+| host_name | wymagany | nazwa hosta |  |
+| measurement_id | wymagany | id pomiaru |  |
 | value | wymagany | wartość pomiaru |  |
 | date | wymagany | data pomiaru |  |
 
@@ -237,15 +197,15 @@ Odpowiedź:
     [     
                                      
         {
-            host-name: [string],
-            measurment_name : [string],
-			value: [string],	
+            host_name: [string],
+            measurement_id : [string],
+			value: [double],	
             date: [string]
         },
         {
-            host-name: [string],
-            measurment_name : [string],
-			value: [string],	
+            host_name: [string],
+            measurement_id : [string],
+			value: [double],	
             date: [string]
         }   
     ]
@@ -262,8 +222,8 @@ Parametry:
 
 | Nazwa | Wymagany | Opis | Domyślnie |
 |-------|----------|------|-----------|
-| time-from | opcjonalny | pomiary starsze niż podana data | |
-| time-to | opcjonalny | pomiary młodsze niż podana data | |
+| time_from | opcjonalny | pomiary starsze niż podana data | |
+| time_to | opcjonalny | pomiary młodsze niż podana data | |
 | count | opcjonalny | ilosc pomiarów | 50 |
 | offset | opcjonalny | ilosc ignorowanych pierwszych wyników(do stronnicowania) | 0 |
 
@@ -366,7 +326,7 @@ Parametry:
 
 | Nazwa | Wymagany | Opis | Domyślnie |
 |-------|----------|------|-----------|
-| names | opcjonalny | nazwa poszukiwanych hostów | |
+| name | opcjonalny | nazwa poszukiwanych hostów | |
 | count | opcjonalny | ilosc hostów | 50 |
 | offset | opcjonalny | ilosc ignorowanych pierwszych wyników(do stronnicowania) | 0 |
 
@@ -376,6 +336,8 @@ Odpowiedź:
 |-------|----------|------|-----------|
 | id | wymagany | id hosta | |
 | name | wymagany | nazwa hosta |  |
+| measurements | wymagany | pomiary hosta |  |
+| metadata | wymagany | metadane hosta |  |
 
 
 ```javascript
@@ -384,10 +346,42 @@ Odpowiedź:
         {
             id: [long],
             name : [string],
+            measurements : [{
+								id: [long],
+								description : [string]
+							},
+							{
+								id: [long],
+								description : [string]
+							}],
+			metadata: [{
+							key : [string],
+							value: [string]
+						},
+						{
+							key : [string],
+							value: [string]
+						}]
         },
         {
             id: [long],
             name : [string],
+            measurements : [{
+								id: [long],
+								description : [string]
+							},
+							{
+								id: [long],
+								description : [string]
+							}],
+			metadata: [{
+							key : [string],
+							value: [string]
+						},
+						{
+							key : [string],
+							value: [string]
+						}]
         },
     ]
 }

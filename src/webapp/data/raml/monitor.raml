@@ -1,0 +1,263 @@
+#%RAML 0.8
+title: "DistributedMonitor"
+version: "v1"
+baseUri: "http://localhost:5555"
+protocols: [HTTP]
+mediaType: "application/json"
+
+resourceTypes:
+  - collection:
+      description: Manage the collection of <<resourcePathName>>.
+      get?:
+        responses:
+          200:
+            description: Success!
+            headers:
+              Paginator:
+                displayName: Paginator
+                required: true
+                type: string
+                example: !include static-examples/pagination_header.json
+          404:
+            description: Not Found
+            body:
+              application/json:
+                example: !include static-examples/empty.json
+                schema: !include schemas/empty.json
+          500:
+            description: Server Error
+            body:
+              application/json:
+                example: !include static-examples/error_500.json
+                schema: !include schemas/error.json
+      post?:
+        responses:
+          400:
+            description: Bad Request
+            body:
+              application/json:
+                example: !include static-examples/error_400.json
+                schema: !include schemas/error.json
+          404:
+            description: Not Found
+            body:
+              application/json:
+                example: !include static-examples/empty.json
+                schema: !include schemas/empty.json
+          500:
+            description: Server Error
+            body:
+              application/json:
+                example: !include static-examples/error_500.json
+                schema: !include schemas/error.json
+  - collection-item:
+      description: Manage single <<resourcePathName|!singularize>> items.
+      get?:
+        responses:
+          404:
+            description: Not Found
+            body:
+              application/json:
+                example: !include static-examples/empty.json
+                schema: !include schemas/empty.json
+          500:
+            description: Server Error
+            body:
+              application/json:
+                example: !include static-examples/error_500.json
+                schema: !include schemas/error.json
+      patch?:
+        responses:
+          400:
+            description: Bad Request
+            body:
+              application/json:
+                example: !include static-examples/error_400.json
+                schema: !include schemas/error.json
+          404:
+            description: Not Found
+            body:
+              application/json:
+                example: !include static-examples/empty.json
+                schema: !include schemas/empty.json
+          500:
+            description: Server Error
+            body:
+              application/json:
+                example: !include static-examples/error_500.json
+                schema: !include schemas/error.json
+# securedBy:
+traits:
+  - paginable:
+      queryParameters:
+        limit:
+          description: the number of items returned
+          type: integer
+        offset:
+          description: the starting position
+          type: integer
+  - sortable:
+      queryParameters:
+        order:
+          description: |
+            comma-separated list of strings
+            in the field:order_type format,
+            where order_type is ASC (ascending)
+            or DESC (descending)
+          type: string
+          example: surname:DESC,createdAt:DESC
+  - query:
+      queryParameters:
+        query:
+          description: |
+            comma-separated list of strings
+            in the format of "field":"value"
+            between curly brackets {},
+            where field contains a short name
+            or a long one for nested fields
+            (two field names separated by a dot)
+            and value can contain comparison operators:
+            $gt, $ge, $lt, $le, $in, $nin, $or.
+          type: string
+          example: !include static-examples/query.json
+  - fieldable:
+      queryParameters:
+        fields:
+          description: |
+            comma-separated list of strings -
+            the names of fields to be returned;
+            for nested fields, the names are separated by a dot
+          type: string
+          example: name,surname,address.street
+/login:
+  type: collection-item
+  displayName: login
+  description: Manage auth session
+  post:
+    description: Login user with login, password
+    body:
+      application/json:
+        example: !include examples/login.json
+        schema: !include schemas/login.json
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/jwt.json
+            schema: !include schemas/jwt.json
+/logout:
+  type: collection-item
+  displayName: logout
+  description: Manage auth session
+  post:
+    description: Logout user with jwt
+    body:
+      application/json:
+        example: !include examples/jwt.json
+        schema: !include schemas/jwt.json
+    responses:
+      200:
+        body:
+          application/json:
+            example: ""
+/register:
+  type: collection-item
+  displayName: register
+  description: Manage auth register
+  post:
+    description: Logout user with jwt
+    body:
+      application/json:
+        example: !include examples/register.json
+        schema: !include schemas/register.json
+    responses:
+      200:
+        body:
+          application/json:
+            example: ""
+/measurements:
+  get:
+    description: Gets a measurements
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/measurements.json
+            schema: !include schemas/measurements.json
+  post:
+    description: Create a measurement
+    body:
+      application/json:
+        example: !include examples/measurement_post.json
+        schema: !include schemas/measurement_post.json
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/measurement_post_res.json
+            schema: !include schemas/measurement_post_res.json
+  /{measurementsid}:
+    put:
+      description: Update a measurement
+      body:
+        application/json:
+          example: !include examples/measurement_put.json
+          schema: !include schemas/measurement_put.json
+      responses:
+        200:
+          body:
+            application/json:
+              example: ""
+    delete:
+      description: remove measurements by id
+      body:
+        application/json:
+          example: !include examples/jwt.json
+          schema: !include schemas/jwt.json
+      responses:
+        200:
+          body:
+            application/json:
+              example: ""
+    post:
+      description: Update a measurement values
+      body:
+        application/json:
+          example: !include examples/measurement_data_post.json
+          schema: !include schemas/measurement_data_post.json
+      responses:
+        200:
+          body:
+            application/json:
+              example: ""
+  /values:
+    get:
+      description: Gets a measurements values
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/measurements_values.json
+              schema: !include schemas/measurements_values.json
+  /complex:
+    post:
+      description: Create complex measurement
+      body:
+        application/json:
+          example: !include examples/measurement_complex_post.json
+          schema: !include schemas/measurement_complex_post.json
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/measurement_complex_post_res.json
+              schema: !include schemas/measurement_complex_post_res.json
+/sensors:
+  get:
+    description: Gets a sensors
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/sensors.json
+            schema: !include schemas/sensors.json

@@ -1,0 +1,12 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"description": "a login response object for POST",
+	"type": "object",
+	"properties": {
+		"jwt": {
+			"description": "JSON Web Token",
+			"type": "string"
+		}
+	},
+	"additionalProperties": false
+}

@@ -1,0 +1,9 @@
+{
+    "code": 40001,
+    "message": "Deserialization error",
+    "data": {
+        "cause": "Unexpected character (',' (code 44)): was expecting double-quote to start field name",
+        "line": 1,
+        "column": 3
+    }
+}

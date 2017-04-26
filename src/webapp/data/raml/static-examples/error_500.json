@@ -1,0 +1,15 @@
+{
+    "code": 50001,
+    "message": "Unexpected error occurred",
+    "data": {
+        "cause": "Database query failed",
+        "explanation": {
+            "serverUsed": "db:27017",
+            "ok": 1,
+            "n": 0,
+            "updatedExisting": true,
+            "err": "insertDocument :: caused by :: 11000 E11000 duplicate key error index: IC_instance.achievementtemplate.$id_1  dup key: { : \"moje\" }",
+            "code": 11000
+        }
+    }
+}

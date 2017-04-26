@@ -1,0 +1,20 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "a measurements post ressponse object",
+    "type": "object",
+    "properties": {
+        "sensor_id": {
+            "description": "the sensor id",
+            "type": "number"
+        },
+        "measurement_id": {
+            "description": "the measurements id",
+            "type": "number"
+        }
+    },
+    "required": [
+        "sensor_id",
+        "measurement_id"
+    ],
+    "additionalProperties": false
+}

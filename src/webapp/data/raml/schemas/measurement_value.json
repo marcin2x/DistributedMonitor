@@ -1,0 +1,20 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "a user object",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "the measurements id",
+            "type": "number"
+        },
+        "name": {
+            "description": "the measurements name",
+            "type": "string"
+        }
+    },
+    "required": [
+        "id",
+        "name"
+    ],
+    "additionalProperties": false
+}

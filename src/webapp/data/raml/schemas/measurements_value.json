@@ -1,0 +1,34 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "a user object",
+    "type": "object",
+    "properties": {
+        "measurment_id": {
+            "description": "the measurements id",
+            "type": "number"
+        },
+        "measurment_name": {
+            "description": "the measurements name",
+            "type": "string"
+        },
+        "values": {
+            "type": "object",
+            "properties": {
+                "value": {
+                    "description": "the measurements value",
+                    "type": "string"
+                },
+                "date": {
+                    "description": "the measurements date",
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "required": [
+        "measurment_id",
+        "measurment_name",
+        "values"
+    ],
+    "additionalProperties": false
+}

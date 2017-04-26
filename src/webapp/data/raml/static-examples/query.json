@@ -1,0 +1,6 @@
+{
+    "visibility": true,
+    "level": {
+        "$gt": 5
+    }
+}

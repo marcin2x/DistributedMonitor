@@ -26,6 +26,7 @@ Parametry:
 | key | wymagany | nazwa metadanej | |
 | value | wymagany | wartość metadanej | |
 
+```javascript
 {
     "type": "register",
     "body":
@@ -55,6 +56,7 @@ Parametry:
     }
 
 }
+```
 
 Odpowiedź:
 
@@ -67,6 +69,7 @@ Odpowiedź:
 | measurements_name | wymagany | unikalna nazwa pomiaru | |
 | measurements_id | wymagany | unikalne id pomiaru | |
 
+```javascript
 {
     "type": "register",
     "body":
@@ -86,6 +89,7 @@ Odpowiedź:
     }
 }
 
+```
 
 
 ### Wysłanie pomiarów
@@ -101,7 +105,7 @@ Parametry:
 | measurement_id | wymagany | id pomiaru |  |
 | measurement_value | wymagany | wartości pomiaru |  |
 
-
+```javascript
 {
     "type": "data",
     "body":
@@ -121,6 +125,7 @@ Parametry:
     }
 }
 
+```
 Odpowiedź:
 
 | Nazwa | Wymagany | Opis | Domyślnie |
@@ -128,7 +133,9 @@ Odpowiedź:
 | type | wymagany | typ operacji | |
 | body | wymagany | informacja o wyniku operacji(lub opis błedu) |  |
 
+```javascript
 {
     "type": "data",
     "body": "OK" 
 }
+```

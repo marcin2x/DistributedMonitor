@@ -114,12 +114,12 @@ Parametry:
         "values":
         [
             {
-                "measurement_id": 19, // ID pomiaru nadane przy rejestracji
-                "measurement_value": "95" /// w procentach
+                "measurement_id": 19, 
+                "measurement_value": "95" 
             },
             {
-                "measurement_id": 20,  // ID pomiaru nadane przy rejestracji
-                "measurement_value": "15" /// w procentach
+                "measurement_id": 20, 
+                "measurement_value": "15" 
             }
         ]
     }

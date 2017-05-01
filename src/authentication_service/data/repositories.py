@@ -27,7 +27,7 @@ class MonitorRepository:
         return Monitor.get(Monitor.id == id)
 
     def delete(self, monitor):
-        monitor.delete()
+        monitor.delete_instance()
 
     def findAllForUser(self, user):
         return list(Monitor.select().where(Monitor.user == user))

@@ -3,7 +3,7 @@ class SensorMonitorCommunicationException(Exception):
         Exception.__init__(self)
 
     def __str__(self):
-        return self.message
+        return "%s: %s" % (self.__class__.__name__, self.message)
 
 
 class MissingMessageParameterException(SensorMonitorCommunicationException):
@@ -31,6 +31,11 @@ class MissingSensorDataResponseParameterException(MissingMessageParameterExcepti
         super().__init__(*args, **kwargs)
 
 
+class MissingErrorResponseParameterException(MissingMessageParameterException):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
 class InvalidMessageParameterException(SensorMonitorCommunicationException):
     def __init__(self, message):
         self.message = message
@@ -52,6 +57,11 @@ class InvalidSensorRegisterResponseParameterException(InvalidMessageParameterExc
 
 
 class InvalidSensorDataResponseParameterException(InvalidMessageParameterException):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+class InvalidErrorResponseParameterException(InvalidMessageParameterException):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

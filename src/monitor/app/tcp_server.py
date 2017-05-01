@@ -10,48 +10,56 @@ class TCPHandler(socketserver.BaseRequestHandler):
     data = bytes()
 
     def handle(self):
-        while True:
-            chunk = self.request.recv(BUFFER_SIZE)
-            self.data += chunk
+        try:
+            while True:
+                chunk = self.request.recv(BUFFER_SIZE)
+                self.data += chunk
 
-            if len(chunk) < BUFFER_SIZE:
-                break
+                if len(chunk) < BUFFER_SIZE:
+                    break
 
-        deserialized_request = deserialize_request(self.data)
+            deserialized_request = deserialize_request(self.data)
 
-        if deserialized_request.type == "register":
-            # TODO: handle register request
-            # deserialized_request.identifier
-            # deserialized_request.name
-            # deserialized_request.measurements
-            # deserialized_request.metadata
+            if deserialized_request.type == "register":
+                # TODO: handle register request
+                # deserialized_request.identifier
+                # deserialized_request.name
+                # deserialized_request.measurements
+                # deserialized_request.metadata
 
-            # Example response:
-            sensor_id = 12
-            measurements = [
-                {
-                    "measurements_name": "CPU",
-                    "measurements_id": 19
-                },
-                {
-                    "measurements_name": "RAM",
-                    "measurements_id": 20
-                },
-            ]
-            response = SensorRegisterResponse(sensor_id, measurements)
+                # Example response:
+                sensor_id = 12
+                measurements = [
+                    {
+                        "measurements_name": "CPU",
+                        "measurements_id": 19
+                    },
+                    {
+                        "measurements_name": "RAM",
+                        "measurements_id": 20
+                    },
+                ]
+                response = SensorRegisterResponse(sensor_id, measurements)
 
-        elif deserialized_request.type == "data":
-            # TODO: handle data request
-            # deserialized_request.sensor_id
-            # deserialized_request.values
+            elif deserialized_request.type == "data":
+                # TODO: handle data request
+                # deserialized_request.sensor_id
+                # deserialized_request.values
 
-            # Example response:
-            response = SensorDataResponse("OK")
+                # Example response:
+                response = SensorDataResponse("OK")
 
-        else:
-            raise InvalidSensorMessageTypeException(deserialized_request.type)
+            else:
+                raise InvalidSensorMessageTypeException(deserialized_request.type)
 
-        self.request.send(serialize(response))
+            serialized_response = serialize(response)
+
+        except Exception as e:
+            response = ErrorResponse(str(e) or e.__class__.__name__)
+            serialized_response = serialize(response)
+            print(e)
+
+        self.request.send(serialized_response)
 
 
 def run():

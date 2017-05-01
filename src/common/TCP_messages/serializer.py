@@ -5,6 +5,7 @@ from .sensor_data_request import SensorDataRequest
 from .sensor_data_response import SensorDataResponse
 from .sensor_register_request import SensorRegisterRequest
 from .sensor_register_response import SensorRegisterResponse
+from .error_response import ErrorResponse
 
 
 def serialize(message):
@@ -33,5 +34,7 @@ def deserialize_response(message):
         return SensorRegisterResponse(**body)
     elif type == "data":
         return SensorDataResponse(body)
+    elif type == "error":
+        return ErrorResponse(body)
     else:
         raise InvalidSensorMessageTypeException(type)

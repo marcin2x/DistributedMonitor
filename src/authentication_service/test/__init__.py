@@ -1,1 +1,1 @@
-from src.authentication_service.test import auth_test
+from src.authentication_service.test import auth_test, db_test, rest_test

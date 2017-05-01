@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Avaliable monitors</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div
+        ng-repeat="monitor in monitors"
+        class="col-lg-4 col-sm-6">
+        <div class="panel panel-green">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        Monitor:
+                    </div>
+                    <div class="col-xs-9 text-center">
+                        <div class="huge">
+                            {{monitor.name}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <ul >
+                    <li>ID: <strong>{{monitor.id}}</strong></li>
+                    <li>Address: <strong>{{monitor.address}}</strong></li>
+                    <li>Port: <strong>{{monitor.port}}</strong></li>
+                    <li>User id: <strong>{{monitor.user_id}}</strong></li>
+                </ul>
+            </div>
+            <a  ui-sref="monitors.info({ monitorId: monitor.id })">
+                <div class="panel-footer">
+                    <span class="pull-left">View Details</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-3">
+        <div class="options">
+            <a ng-click="addModal()" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-plus"></i>Add new monitor</a>
+        </div>
+    </div>
+</div>

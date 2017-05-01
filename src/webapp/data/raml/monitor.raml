@@ -1,7 +1,7 @@
 #%RAML 0.8
 title: "DistributedMonitor"
 version: "v1"
-baseUri: "http://localhost:5555"
+baseUri: "http://localhost:3333"
 protocols: [HTTP]
 mediaType: "application/json"
 
@@ -175,6 +175,27 @@ traits:
         body:
           application/json:
             example: ""
+/monitors:
+  get:
+    description: Gets a monitors
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/monitors.json
+            schema: !include schemas/monitors.json
+  post:
+    description: Create a monitor
+    body:
+      application/json:
+        example: !include examples/monitor_post.json
+        schema: !include schemas/monitor_post.json
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/monitor_post_res.json
+            schema: !include schemas/monitor_post_res.json
 /measurements:
   get:
     description: Gets a measurements

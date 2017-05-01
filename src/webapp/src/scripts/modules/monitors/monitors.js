@@ -1,0 +1,1 @@
+const monitors = angular.module('monitors', []);

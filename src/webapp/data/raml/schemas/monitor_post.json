@@ -1,0 +1,25 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "a monitor post object",
+    "type": "object",
+    "properties": {
+        "name": {
+            "description": "the monitor name",
+            "type": "string"
+        },
+        "port": {
+            "description": "the monitor port",
+            "type": "number"
+        },
+        "address": {
+            "description": "the monitor address",
+            "type": "string"
+        }
+    },
+    "required": [
+        "name",
+        "port",
+        "address"
+    ],
+    "additionalProperties": false
+}

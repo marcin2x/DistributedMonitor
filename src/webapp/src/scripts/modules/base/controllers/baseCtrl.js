@@ -1,3 +1,3 @@
 base.controller('baseCtrl', () => {
-    console.log('baseController');
+    console.log('appStart')
 });

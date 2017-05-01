@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "bower install && gulp build"
+    "postinstall": "bower install && gulp build",
+    "localapi": "node_modules/.bin/localapi run data/raml/monitor.raml"
   },
   "author": "toto.zetka@gmail.com",
   "license": "ISC",
@@ -20,6 +21,7 @@
     "gulp-ng-annotate": "^2.0.0",
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.4.1",
-    "http-proxy": "^1.16.2"
+    "http-proxy": "^1.16.2",
+    "localapi": "^1.6.0"
   }
 }

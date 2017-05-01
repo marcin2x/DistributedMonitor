@@ -18,6 +18,7 @@ base.config(($stateProvider, $urlRouterProvider, $locationProvider, $httpProvide
     $urlRouterProvider.otherwise('/dashboard');
     $httpProvider.interceptors.push('errorHandler');
 }).run( $rootScope => {
+    $rootScope.jwt = '11111111111111';
     $rootScope.loaded = false;
     $rootScope.$on('$stateChangeSuccess', function () {
         if (!$rootScope.loaded) {

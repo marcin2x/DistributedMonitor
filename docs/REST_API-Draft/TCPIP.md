@@ -139,3 +139,13 @@ Odpowiedź:
     "body": "OK" 
 }
 ```
+
+### Obsługa błędów
+W przypadku wystąpienia błędu po stronie Monitora, wysłana odpowiedź posiada typ "error", a w "body" znajduje się wiadomość opisująca zaistniały wyjątek.
+
+```javascript
+{
+    "type": "error",
+    "body": "InvalidSensorMessageTypeException: Invalid sensor request type: 'unknown'" 
+}
+```

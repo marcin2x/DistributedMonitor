@@ -1,5 +1,4 @@
 from flask import request, jsonify
-from playhouse.shortcuts import model_to_dict, dict_to_model
 from src.authentication_service.rest import service, errors
 from src.authentication_service.data.repositories import MonitorRepository, UserRepository
 from src.authentication_service.rest.config import getUserContext
@@ -11,9 +10,7 @@ monitorRepository = MonitorRepository()
 @service.route('/monitors', methods=['GET'])
 def getMonitors():
 
-    #todo: handle paging count + offset from api
-    user = userRepository.findById(getUserContext()['id'])
-    monitors = monitorRepository.findAllForUser(user)
+    monitors = monitorRepository.findAll()
 
     result = []
     for monitor in monitors:
@@ -42,7 +39,7 @@ def addMonitor():
 
    return jsonify(monitor.get_id())
 
-#todo: permissions?
+
 @service.route('/monitors', methods=['DELETE'])
 def deleteMonitor():
 
@@ -52,6 +49,8 @@ def deleteMonitor():
     monitor = monitorRepository.find(monitor_id)
     if monitor == None:
         raise errors.RestError(message='Monitor with provided id does not exist', status_code=400)
+    if not monitor.user.id == getUserContext()['id']:
+        raise errors.RestError(message='No required permission for monitor deletion', status_code=403)
 
     monitorRepository.delete(monitor)
 

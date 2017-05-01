@@ -32,5 +32,8 @@ class MonitorRepository:
     def findAllForUser(self, user):
         return list(Monitor.select().where(Monitor.user == user))
 
+    def findAll(self):
+        return list(Monitor.select());
+
     def isUnique(self, name):
         return len(Monitor.select().where(Monitor.name == name)) == 0

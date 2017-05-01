@@ -32,7 +32,7 @@ def handle_invalid_usage(error):
     response.status_code = error.status_code
     return response
 
-#@service.errorhandler(Exception)
-#def all_exception_handler(error):
-#   dbProvider.close()
-#   return 'Internal Server Error', 500
+@service.errorhandler(Exception)
+def all_exception_handler(error):
+   dbProvider.close()
+   return 'Internal Server Error', 500

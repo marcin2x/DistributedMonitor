@@ -104,7 +104,8 @@ class DatabaseModel(Model):
 
             self.database.commit()
         except DoesNotExist:
-            return SensorDataResponse("Sensor with id " + str(request.sensor_id) + " does not exist.")
+            return ErrorResponse("Sensor with id " + str(request.sensor_id) + " does not exist.")
+
         return SensorDataResponse("OK")
 
     def getMeasurementValues(self, request):

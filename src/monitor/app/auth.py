@@ -1,6 +1,6 @@
 from flask import request, jsonify
 
-from app import app, errors
+from src.monitor.app import app, errors
 
 
 @app.route('/login', methods=['POST'])

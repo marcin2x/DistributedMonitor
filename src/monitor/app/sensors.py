@@ -1,6 +1,6 @@
 from flask import request, jsonify
 
-from app import app
+from src.monitor.app import app, errors
 
 
 @app.route('/sensors', methods=['GET'])

@@ -1,6 +1,6 @@
 from flask import request, jsonify
 
-from app import app, errors
+from src.monitor.app import app, errors
 
 
 @app.route('/measurements', methods=['POST', 'GET'])
@@ -63,9 +63,27 @@ def update(measurement_id):
 
 @app.route('/measurements/values', methods=['GET'])
 def get_values():
-    measurement_names = request.args.get('measurement-names')
-    time_from = request.args.get('time-from')
-    time_to = request.args.get('time-to')
+    measurement_names = request.args.get('measurement_names')
+    host_name = request.args.get('host_name')
+    time_from = request.args.get('time_from')
+    time_to = request.args.get('time_to')
+    count = request.args.get('count')
+    offset = request.args.get('offset')
+    only_complex = request.args.get('only_complex')
+    if count is None:
+        count = 50
+    if offset is None:
+        offset = 0
+    if only_complex in None:
+        only_complex = False
+
+    return jsonify(list())
+
+
+@app.route('/measurements/<int:measurement_id>/values', methods=['GET'])
+def get_values_for_measurement_id(measurement_id):
+    time_from = request.args.get('time_from')
+    time_to = request.args.get('time_to')
     count = request.args.get('count')
     offset = request.args.get('offset')
     if count is None:

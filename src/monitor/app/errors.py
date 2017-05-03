@@ -1,6 +1,6 @@
 from flask import jsonify
 
-from src.monitor.app import app, errors
+from app import app
 
 
 class RestError(Exception):

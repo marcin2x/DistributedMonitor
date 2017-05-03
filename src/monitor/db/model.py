@@ -258,11 +258,3 @@ def createTestData():
     database.close()
 
 # createTestData()
-
-database.close()
-database.connect()
-
-print(database.registerSensor(SensorRegisterRequest(identifier="PC",name="PC",
-                                              measurements=[{"name": "CPU"}],
-                                              metadata=[{"key": "Key12","value": "12Vdalue3"}])).get_message_body())
-database.close()

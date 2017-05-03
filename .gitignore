@@ -90,9 +90,12 @@ ENV/
 /.idea
 
 
-#webapp
+# webapp
 app/node_modules
 app/src/components
 app/src/css
 app/src/app.js.map
 app/src/app.js
+
+#databases
+*.db

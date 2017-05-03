@@ -24,7 +24,7 @@ class BaseModel(Model):
 class Sensor(BaseModel):
     identifier = CharField(unique=True)
     name = CharField()
-    created = DateTimeField(default=datetime.datetime.now)
+    created = DateTimeField(default=datetime.datetime.utcnow)
 
 
 class Metadata(BaseModel):

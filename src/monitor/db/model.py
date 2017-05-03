@@ -100,7 +100,8 @@ class DatabaseModel(Model):
                     MeasurementValue.create(value=v['measurement_value'], measurement=m)
                 except DoesNotExist:
                     db.rollback()
-                    return SensorDataResponse("Measurement with id " + str(v['measurement_id']) + " does not exist.")
+                    return ErrorResponse("Measurement with id " + str(v['measurement_id']) + " does not exist.")
+
             self.database.commit()
         except DoesNotExist:
             return SensorDataResponse("Sensor with id " + str(request.sensor_id) + " does not exist.")
@@ -257,3 +258,11 @@ def createTestData():
     database.close()
 
 # createTestData()
+
+database.close()
+database.connect()
+
+print(database.registerSensor(SensorRegisterRequest(identifier="PC",name="PC",
+                                              measurements=[{"name": "CPU"}],
+                                              metadata=[{"key": "Key12","value": "12Vdalue3"}])).get_message_body())
+database.close()

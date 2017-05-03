@@ -12,9 +12,12 @@
     <uib-tabset>
         <uib-tab
             ng-repeat="host in hosts"
+            select="select(host.name)"
             index="$index"
             heading="{{host.name}}">
-            {{host.metadata}}
+            <canvas id="line" class="chart chart-line" chart-data="data"
+                    chart-labels="labels" chart-series="series">
+            </canvas>
         </uib-tab>
     </uib-tabset>
 </div>
@@ -23,7 +26,7 @@
     <table class="table table-striped table-bordered table-hover">
         <thead>
             <tr>
-                <th>Sensor name</th>
+                <th>Host name</th>
                 <th>Value</th>
                 <th>Time</th>
             </tr>

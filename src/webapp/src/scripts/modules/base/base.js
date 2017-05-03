@@ -4,5 +4,6 @@ const base = angular.module('base', [
     'ngSanitize',
     'ui.bootstrap',
     'restangular',
+    'chart.js',
     'monitors'
 ]);

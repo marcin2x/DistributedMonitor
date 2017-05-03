@@ -2,4 +2,4 @@ from flask import Flask
 
 app = Flask(__name__)
 
-from app import auth, errors, measurements, sensors, db
+from app import auth, errors, measurements, hosts, db

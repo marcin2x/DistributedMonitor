@@ -139,7 +139,7 @@ class DatabaseModel(Model):
         try:
             if len(conditions):
                 query = query.where(*conditions)
-            query = query.paginate(int(offset) + 1, int(count))
+            query = query.limit(int(count)).offset(int(offset))
         except DoesNotExist:
             return []
 
@@ -165,8 +165,9 @@ class DatabaseModel(Model):
 
         try:
             if len(conditions):
-                query = query.where(*conditions)
-            query = query.paginate(int(offset) + 1, int(count))
+                query = query.where(*conditions).order_by(-MeasurementValue.created)
+
+                query = query.limit(int(count)).offset(int(offset))
         except DoesNotExist:
             return []
 
@@ -174,7 +175,7 @@ class DatabaseModel(Model):
                  "date":v.created } for v in query]
 
     def getSensors(self, request):
-        hostName = request.args.get('host_name') or None
+        hostName = request.args.get('name') or None
         count = request.args.get('count') or 50
         offset = request.args.get('offset') or 0
 
@@ -187,7 +188,7 @@ class DatabaseModel(Model):
         try:
             if len(conditions):
                 query = query.where(*conditions)
-            query = query.paginate(int(offset) + 1, int(count))
+            query = query.limit(int(count)).offset(int(offset))
         except DoesNotExist:
             return []
 

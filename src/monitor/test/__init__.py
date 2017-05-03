@@ -1,1 +1,1 @@
-from test import auth_test, measurements_test, sensors_test
+from test import auth_test, measurements_test, hosts_test

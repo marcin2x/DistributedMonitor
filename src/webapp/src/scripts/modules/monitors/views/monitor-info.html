@@ -1,1 +1,39 @@
-<h1>monitor info</h1>
+<div class="row">
+    <div class="col-lg-6">
+        <h1 class="page-header">{{monitor.name}}</h1>
+    </div>
+    <div class="col-lg-6">
+        <h1 class="page-header">
+            <button type="button" class="btn btn-danger" ng-click="remove(monitor.id)"> Delete monitor </button>
+        </h1>
+    </div>
+</div>
+<div class="row">
+    <uib-tabset>
+        <uib-tab
+            ng-repeat="host in hosts"
+            index="$index"
+            heading="{{host.name}}">
+            {{host.metadata}}
+        </uib-tab>
+    </uib-tabset>
+</div>
+
+<div class="row">
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Sensor name</th>
+                <th>Value</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="value in values">
+                <td>{{value.host_name}}</td>
+                <td>{{value.value}}</td>
+                <td>{{value.date | timeago}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

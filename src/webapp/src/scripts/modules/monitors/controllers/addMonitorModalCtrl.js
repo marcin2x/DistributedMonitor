@@ -3,7 +3,7 @@ monitors.controller('addMonitorModalCtrl', ($scope, $uibModalInstance, monitorsS
 
     $scope.addMonitor = (c = true) => {
         if(c) delete $scope.form.additionalProperty;
-        monitorsService.createMonitor($scope.form).then(res => {
+        monitorsService.create($scope.form).then(res => {
             $scope.ok(res.plain());
         }, err => {
             $scope.error = err.data.message;

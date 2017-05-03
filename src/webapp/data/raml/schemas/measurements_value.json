@@ -7,22 +7,18 @@
             "description": "the measurements id",
             "type": "number"
         },
-        "measurment_name": {
-            "description": "the measurements name",
+        "host_name": {
+            "description": "the host name",
             "type": "string"
         },
-        "values": {
-            "type": "object",
-            "properties": {
-                "value": {
-                    "description": "the measurements value",
-                    "type": "string"
-                },
-                "date": {
-                    "description": "the measurements date",
-                    "type": "string"
-                }
-            }
+        "value": {
+            "description": "the measurement value",
+            "type": "number"
+        },
+        "date": {
+            "description": "the measurement date",
+            "type": "string",
+            "format": "date"
         }
     },
     "required": [

@@ -1,4 +1,4 @@
-base.factory('monitorsService', (Restangular, $uibModal, $q) => {
+monitors.factory('monitorsService', (Restangular, $uibModal, $rootScope) => {
     const  getMonitors = () => {
             return Restangular.one('monitors').getList();
         },
@@ -10,7 +10,7 @@ base.factory('monitorsService', (Restangular, $uibModal, $q) => {
                 backdrop: true
             }).result;
         },
-        get = (id) => {
+        get = id => {
             return new Promise((resolve,reject) => {
                 getMonitors().then(monitors => {
                     const monitor = monitors.find(m => m.id == id);
@@ -19,15 +19,23 @@ base.factory('monitorsService', (Restangular, $uibModal, $q) => {
                 });
             })
         },
-        createMonitor = data => {
-            return Restangular.all('monitors').post(data);
+        create = data => {
+            return Restangular.all('monitors').post(data,undefined, {
+                Authorization: 'jwt=' + $rootScope.jwt
+            });
+        },
+        remove = id => {
+            return Restangular.one('monitors',id).remove(undefined, {
+                Authorization: 'jwt=' + $rootScope.jwt
+            });
         }
 
     return {
         getMonitors,
         get,
         addModal,
-        createMonitor
+        create,
+        remove
     };
 
 

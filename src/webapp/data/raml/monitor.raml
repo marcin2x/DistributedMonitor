@@ -196,6 +196,18 @@ traits:
           application/json:
             example: !include examples/monitor_post_res.json
             schema: !include schemas/monitor_post_res.json
+  /{id}:
+    delete:
+      description: remove monitor by id
+      body:
+        application/json:
+          example: !include examples/empty.json
+          schema: !include schemas/empty.json
+      responses:
+        200:
+          body:
+            application/json:
+              example: ""
 /measurements:
   get:
     description: Gets a measurements
@@ -273,12 +285,12 @@ traits:
             application/json:
               example: !include examples/measurement_complex_post_res.json
               schema: !include schemas/measurement_complex_post_res.json
-/sensors:
+/hosts:
   get:
-    description: Gets a sensors
+    description: Gets a hosts
     responses:
       200:
         body:
           application/json:
-            example: !include examples/sensors.json
-            schema: !include schemas/sensors.json
+            example: !include examples/hosts.json
+            schema: !include schemas/hosts.json

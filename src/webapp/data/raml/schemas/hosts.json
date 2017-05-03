@@ -3,6 +3,6 @@
 	"description": "a sensors list",
 	"type": "array",
 	"items": {
-		"$ref": "sensor.json"
+		"$ref": "host.json"
 	}
 }

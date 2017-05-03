@@ -1,7 +1,7 @@
 import socketserver
 import json
 from src.common.TCP_messages import *
-
+from src.monitor.db.model import database
 
 BUFFER_SIZE = 1024
 
@@ -21,33 +21,10 @@ class TCPHandler(socketserver.BaseRequestHandler):
             deserialized_request = deserialize_request(self.data)
 
             if deserialized_request.type == "register":
-                # TODO: handle register request
-                # deserialized_request.identifier
-                # deserialized_request.name
-                # deserialized_request.measurements
-                # deserialized_request.metadata
-
-                # Example response:
-                sensor_id = 12
-                measurements = [
-                    {
-                        "measurements_name": "CPU",
-                        "measurements_id": 19
-                    },
-                    {
-                        "measurements_name": "RAM",
-                        "measurements_id": 20
-                    },
-                ]
-                response = SensorRegisterResponse(sensor_id, measurements)
+                response = database.registerSensor(deserialized_request)
 
             elif deserialized_request.type == "data":
-                # TODO: handle data request
-                # deserialized_request.sensor_id
-                # deserialized_request.values
-
-                # Example response:
-                response = SensorDataResponse("OK")
+                response = database.createSensorData(deserialized_request)
 
             else:
                 raise InvalidSensorMessageTypeException(deserialized_request.type)

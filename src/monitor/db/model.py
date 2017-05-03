@@ -22,7 +22,7 @@ class BaseModel(Model):
 
 
 class Sensor(BaseModel):
-    identifier = IntegerField()
+    identifier = CharField(unique=True)
     name = CharField()
     created = DateTimeField(default=datetime.datetime.now)
 
@@ -35,15 +35,15 @@ class Metadata(BaseModel):
 
 class Measurement(BaseModel):
     name = CharField()
-    description = CharField()
+    description = CharField(null=True)
     sensor = ForeignKeyField(Sensor, related_name='measurements')
-    created = DateTimeField(default=datetime.datetime.now)
+    created = DateTimeField(default=datetime.datetime.utcnow)
 
 
 class MeasurementValue(BaseModel):
     value = DoubleField()
     measurement = ForeignKeyField(Measurement, related_name='values')
-    created = DateTimeField(default=datetime.datetime.now)
+    created = DateTimeField(default=datetime.datetime.utcnow)
 
 
 class DatabaseModel(Model):
@@ -69,11 +69,20 @@ class DatabaseModel(Model):
             self.database.close()
 
     def registerSensor(self, request):
-        s = Sensor.create(identifier=request.identifier, name=request.name)
+        try:
+            s = Sensor.get(identifier=request.identifier)
+        except DoesNotExist:
+            s = Sensor.create(identifier=request.identifier, name=request.name)
+
         for m in request.measurements:
-            Measurement.create(name=m['name'], sensor=s)
+            Measurement.get_or_create(name=m['name'], sensor=s)
         for m in request.metadata:
-            Metadata.create(key=m['key'], value=m['value'], sensor=s)
+            try:
+                m1 = Metadata.get(key=m['key'], sensor=s)
+                m1.value = m['value']
+                m1.save()
+            except DoesNotExist:
+                Metadata.create(key=m['key'],value=m['value'],sensor=s)
 
         return SensorRegisterResponse(s.id,
                                       [{'measurements_name': m.name,
@@ -234,7 +243,7 @@ def createTestData():
         return
 
     for name in ["Laptop", "PC"]:
-        s = Sensor.create(identifier=len(name),name=name)
+        s = Sensor.create(identifier=name,name=name)
         m1 = Measurement.create(name="CPU",description="Description",sensor=s)
         m2 = Measurement.create(name="GPU",description="Description",sensor=s)
         Metadata.create(key="Key1", value='Value1', sensor=s)

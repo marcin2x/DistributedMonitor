@@ -9,8 +9,8 @@ class SensorRegisterRequest(SensorMessage):
         if identifier is None:
             raise MissingSensorRegisterRequestParameterException("identifier")
 
-        if type(identifier) is not int:
-            raise InvalidSensorRegisterRequestParameterException("Parameter \"identifier\" must be of type \"int\"")
+        if type(identifier) is not str:
+            raise InvalidSensorRegisterRequestParameterException("Parameter \"identifier\" must be of type \"str\"")
 
         self.identifier = identifier
 

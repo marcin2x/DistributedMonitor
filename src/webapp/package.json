@@ -6,7 +6,8 @@
   "scripts": {
     "postinstall": "bower install && gulp build",
     "localapi": "node_modules/.bin/localapi run data/raml/monitor.raml",
-    "server": "node app.js"
+    "server": "node app.js",
+    "gulp": "node_modules/.bin/gulp"
   },
   "author": "toto.zetka@gmail.com",
   "license": "ISC",

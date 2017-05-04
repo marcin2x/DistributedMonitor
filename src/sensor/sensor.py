@@ -19,7 +19,6 @@ def prepare_metadata(metadata):
     return result
 
 def prepare_register(data, sensor_id = ""):
-    # TODO How do we specify/generate MAC address
     identifier = str(uuid.uuid4()) if sensor_id == "" else sensor_id
     measurements = [{"name": x } for x in data["measurements"]]
     result = {"type":"register",

@@ -1,0 +1,16 @@
+{
+	"host": "127.0.0.1",
+	"port": 8000,
+	"register_interval": 30,
+	"data_interval": 5,
+	"measurements":
+	[
+		"CPU",
+		"RAM"
+	],
+	"metadata":
+	[
+		"CPU Core count",
+		"Total RAM"
+	]
+}

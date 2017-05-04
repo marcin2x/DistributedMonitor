@@ -5,5 +5,6 @@ const base = angular.module('base', [
     'ui.bootstrap',
     'restangular',
     'chart.js',
-    'monitors'
+    'monitors',
+    'auth'
 ]);

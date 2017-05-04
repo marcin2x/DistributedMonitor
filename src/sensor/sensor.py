@@ -58,23 +58,6 @@ def register(config, conn, sensor_id=""):
             break
     
     response = json.loads(response)
-    # WORKAROUND -if server doesn't response with what we need-
-    # response = {"type": "register",
-    #    "body":{ "sensor_id": 666,
-    #        "measurements": 
-    #        [
-    #            {
-    #                "measurement_name": "CPU",
-    #                "measurement_id": 1
-    #            },
-    #            {
-    #                "measurement_name": "RAM",
-    #                "measurement_id": 2
-    #            }
-    #        ]
-    #        }
-    #    }   
-
     return response
 
 with open('sensor_config.json') as data_file:

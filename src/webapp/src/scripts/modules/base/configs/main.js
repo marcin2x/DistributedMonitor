@@ -17,10 +17,9 @@ base.config(($stateProvider, $urlRouterProvider, $locationProvider, $httpProvide
         });
     $urlRouterProvider.otherwise('/dashboard');
     $httpProvider.interceptors.push('errorHandler');
-}).run( $rootScope => {
-    $rootScope.jwt = '11111111111111';
+}).run( ($rootScope, $state, $timeout) => {
     $rootScope.loaded = false;
-    $rootScope.$on('$stateChangeSuccess', function () {
+    $rootScope.$on('$stateChangeSuccess', () => {
         if (!$rootScope.loaded) {
             $rootScope.loaded = true;
             const loader = document.getElementById('appLoader');
@@ -29,4 +28,13 @@ base.config(($stateProvider, $urlRouterProvider, $locationProvider, $httpProvide
             },500)
         }
     });
+
+    $rootScope.$on('$stateChangeStart', (event, toState, toParams, fromState, fromParams, options) => {
+        if (!$rootScope.jwt &&
+            ['/login', '/register'].indexOf(toState.url) < 0) {
+            $timeout(function() {
+                $state.go('login');
+            });
+        }
+    })
 });

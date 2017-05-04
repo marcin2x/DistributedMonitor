@@ -1,9 +1,9 @@
-auth.controller('loginUserCtrl', ($rootScope, $scope, $state, authorizationService) => {
+auth.controller('loginUserCtrl', ($rootScope, $scope, $state, authService) => {
     $scope.info = $state.params.info;
     $scope.form = {};
 
     $scope.loginUser = () => {
-    authorizationService.login($scope.form).then( res => {
+        authService.login($scope.form).then( res => {
             $rootScope.jwt = res.jwt;
             $state.go('base.dashboard')
         }, err => {

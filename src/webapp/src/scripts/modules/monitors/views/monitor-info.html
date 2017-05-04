@@ -12,17 +12,32 @@
     <uib-tabset>
         <uib-tab
             ng-repeat="host in hosts"
-            select="select(host.name)"
+            select="select(host)"
             index="$index"
             heading="{{host.name}}">
-            <canvas id="line" class="chart chart-line" chart-data="data"
-                    chart-labels="labels" chart-series="series">
-            </canvas>
+            <div class="measurementsTabList">
+                <uib-tabset type="pills">
+                    <uib-tab
+                            ng-repeat="m in host.measurements"
+                            index="$index"
+                            heading="{{m.description}}"
+                            select="selectMeasurement(m.id)"
+                    ></uib-tab>
+                </uib-tabset>
+            </div>
         </uib-tab>
     </uib-tabset>
+    <canvas
+            id="line"
+            class="chart chart-line"
+            chart-data="data"
+            chart-options="options"
+            chart-series="series">
+    </canvas>
 </div>
 
 <div class="row">
+    <h2>Last measurements:</h2>
     <table class="table table-striped table-bordered table-hover">
         <thead>
             <tr>
@@ -32,7 +47,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="value in values">
+            <tr ng-repeat="value in allValues">
                 <td>{{value.host_name}}</td>
                 <td>{{value.value}}</td>
                 <td>{{value.date | timeago}}</td>

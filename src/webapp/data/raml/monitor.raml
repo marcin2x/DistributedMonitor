@@ -263,6 +263,15 @@ traits:
           body:
             application/json:
               example: ""
+    /values:
+      get:
+        description: Gets a measurements values
+        responses:
+          200:
+            body:
+              application/json:
+                example: !include examples/measurementsById_values.json
+                schema: !include schemas/measurementsById_values.json
   /values:
     get:
       description: Gets a measurements values

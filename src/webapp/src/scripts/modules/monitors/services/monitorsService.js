@@ -37,6 +37,4 @@ monitors.factory('monitorsService', (Restangular, $uibModal, $rootScope) => {
         create,
         remove
     };
-
-
 });

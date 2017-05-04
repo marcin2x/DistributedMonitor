@@ -89,6 +89,7 @@ ENV/
 .ropeproject
 /.idea
 
+logs/
 
 # webapp
 app/node_modules

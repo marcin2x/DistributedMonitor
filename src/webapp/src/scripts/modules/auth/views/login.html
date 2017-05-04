@@ -12,7 +12,7 @@
                         </div>
                     </div>
                 </div>
-                <form role="form" ng-submit="loginUser()" id="login_user">
+                <form role="form" ng-submit="loginUser()">
                     <fieldset>
                         <div class="form-group">
                             <input class="form-control" placeholder="E-mail" ng-model="form.login" type="email" autofocus>
@@ -31,11 +31,11 @@
                         </div>
 
                         <!-- Change this to a button or input when using this as a form -->
-                        <input type="submit" class="btn btn-lg btn-success btn-block" form="login_user" value="Login">
+                        <input type="submit" class="btn btn-lg btn-success btn-block" value="Login">
                     </fieldset>
                 </form>
 
-                <p> Don't have already account? <a href="register"> Sign up</a> </p>
+                <p> Don't have already account? <a ui-sref="register"> Sign up</> </p>
             </div>
         </div>
     </div>

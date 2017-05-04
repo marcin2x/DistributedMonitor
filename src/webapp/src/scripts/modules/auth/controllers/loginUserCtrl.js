@@ -1,12 +1,10 @@
-auth.controller('loginUserCtrl', ($scope, $state, loginService) => {
+auth.controller('loginUserCtrl', ($rootScope, $scope, $state, authorizationService) => {
     $scope.info = $state.params.info;
     $scope.form = {};
 
-    $scope.loginUser = (c = true) => {
-        console.log($scope.form)
-        loginService.login($scope.form).then( res => {
-            console.log("Everything is ok")
-
+    $scope.loginUser = () => {
+    authorizationService.login($scope.form).then( res => {
+            $rootScope.jwt = res.jwt;
             $state.go('base.dashboard')
         }, err => {
             $scope.error = err.data.message;

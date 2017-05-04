@@ -1,17 +1,12 @@
-auth.controller('addUserCtrl', ($scope, $state, registerService) => {
+auth.controller('addUserCtrl', ($scope, $state, authorizationService) => {
     $scope.form = {};
 
     $scope.addUser = (c = true) => {
-        console.log($scope.form)
-        registerService.create($scope.form).then( res => {
-            console.log("Everything is ok")
+    authorizationService.create($scope.form).then( res => {
             $state.go('login', {info: "New user registered"})
         }, err => {
             $scope.error = err.data.message;
-    }
-)
-        console.log("Dupa");
-
-
+        }
+    )
     };
 });

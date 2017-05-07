@@ -74,36 +74,40 @@ def run():
         config["identifier"] = generate_id()
         with open("sensor_config.json","w") as con_file:
             json.dump(config, con_file,sort_keys=True, indent=4)
-    
 
-    conn_tuple = (config["host"], config["port"])
-    reg_response = register(config,conn_tuple)
-    rtime = time.time()
+    try:
+        conn_tuple = (config["host"], config["port"])
+        reg_response = register(config, conn_tuple)
+        rtime = time.time()
 
-    while True:
-        dtime = time.time()
-        if config["register_interval"]> 0 and time.time() - rtime > config["register_interval"]:
-            rtime = time.time()
-            reg_response = register(config, conn_tuple)
-            if not QUIET_MODE:
-                print("Register response: ", reg_response.get_message_body())
-        data = prepare_data(reg_response)
-        s = socket.socket()
-        s.connect(conn_tuple)
-        s.sendall(serializer.serialize(data))
-        data_response = bytes()
         while True:
-            chunk = s.recv(BUFFER_SIZE)
-            data_response += chunk
-            if len(chunk) < BUFFER_SIZE:
-                break
-        data_response = serializer.deserialize_response(data_response)
-        s.close()
-        if not QUIET_MODE:
-            print ("Data: ", data.get_message_body())
-            print ("Data response :", data_response.get_message_body())
-        
-        interval = config["data_interval"] - time.time() + dtime
-        if interval > 0 :
-            time.sleep(interval)
-        
+            dtime = time.time()
+            if config["register_interval"] > 0 and time.time() - rtime > config["register_interval"]:
+                rtime = time.time()
+                reg_response = register(config, conn_tuple)
+                if not QUIET_MODE:
+                    print("Register response: ", reg_response.get_message_body())
+            data = prepare_data(reg_response)
+            s = socket.socket()
+            s.connect(conn_tuple)
+            s.sendall(serializer.serialize(data))
+            data_response = bytes()
+            while True:
+                chunk = s.recv(BUFFER_SIZE)
+                data_response += chunk
+                if len(chunk) < BUFFER_SIZE:
+                    break
+            data_response = serializer.deserialize_response(data_response)
+            s.close()
+            if not QUIET_MODE:
+                print("Data: ", data.get_message_body())
+                print("Data response :", data_response.get_message_body())
+
+            interval = config["data_interval"] - time.time() + dtime
+            if interval > 0:
+                time.sleep(interval)
+
+    except Exception as exception:
+        print(exception)
+        time.sleep(5)
+

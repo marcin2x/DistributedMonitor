@@ -41,7 +41,7 @@ monitors.controller('monitorInfoCtrl',  ($scope,$filter, $interval, $timeout, $s
     };
 
     $interval(() => {
-        measurementsService.valuesById(id).then(values => {
+        measurementsService.valuesById($scope.measurementId).then(values => {
             dataToChart(values.plain());
         })
     }, 3000);

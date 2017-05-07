@@ -1,4 +1,4 @@
-monitors.controller('monitorInfoCtrl',  ($scope,$filter, $interval, $state, $stateParams, monitorsService, hostService, measurementsService, hostRestangular) => {
+monitors.controller('monitorInfoCtrl',  ($scope,$filter, $interval, $timeout, $state, $stateParams, monitorsService, measurementsService, hostRestangular) => {
 
     $scope.remove = id => {
         monitorsService.remove(id).then(succ => {
@@ -32,7 +32,14 @@ monitors.controller('monitorInfoCtrl',  ($scope,$filter, $interval, $state, $sta
     $scope.selectMeasurement = id => {
         $scope.measurementId = id;
         measurementsService.valuesById(id).then(values => {
-            dataToChart(values.plain())
+            dataToChart(values.plain());
+            let val = $scope.values.slice();
+            val.shift();
+            val.push({
+                date: moment(new Date()).valueOf(),
+                value: Math.floor((Math.random() * 100) + 1)
+            });
+            dataToChart(val);
         })
     }
     $scope.select = host => {
@@ -40,16 +47,9 @@ monitors.controller('monitorInfoCtrl',  ($scope,$filter, $interval, $state, $sta
         $scope.selectMeasurement(host.measurements[0].id);
     };
 
-    $interval(() => {
-        let val = $scope.values.slice();
-        val.shift();
-        val.push({
-            date: moment(new Date()).valueOf(),
-            value: Math.floor((Math.random() * 100) + 1)
-        });
-        dataToChart(val);
-    }, 3000);
+    // $interval(() => {
 
+    // }, 3000);
 
 
 
@@ -57,13 +57,18 @@ monitors.controller('monitorInfoCtrl',  ($scope,$filter, $interval, $state, $sta
         $scope.monitor = monitor;
         hostRestangular.init(monitor.address, monitor.port);
 
-        hostService.getHosts().then(hosts => {
-            $scope.hosts = hosts.plain();
-        });
 
-        measurementsService.values().then(res => {
-            $scope.allValues = res.plain();
-        })
+        $timeout(() => {
+
+
+            measurementsService.getHosts().then(hosts => {
+                $scope.hosts = hosts.plain();
+            });
+
+            measurementsService.values().then(res => {
+                $scope.allValues = res.plain();
+            })
+        }, 0)
 
     }, err => {
         console.log(err);

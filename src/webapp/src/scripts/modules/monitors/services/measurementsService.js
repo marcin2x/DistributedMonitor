@@ -7,11 +7,16 @@ monitors.factory('measurementsService', (Restangular, hostRestangular) => {
         },
         valuesWithParams = params => {
             return hostRestangular.rest().one('measurements/values').customGET('',params);
+        },
+        getHosts = () => {
+            return hostRestangular.rest().one('hosts').getList();
         };
+
 
     return {
         values,
         valuesById,
-        valuesWithParams
+        valuesWithParams,
+        getHosts
     };
 });

@@ -1,6 +1,9 @@
 monitors.factory('monitorsService', (Restangular, $uibModal, $rootScope) => {
-    const  getMonitors = () => {
-            return Restangular.one('monitors').getList();
+   const headers = {
+            Authorization: $rootScope.jwt
+        },
+        getMonitors = () => {
+            return Restangular.one('monitors').getList(undefined, undefined, headers);
         },
         addModal = () => {
             return $uibModal.open({
@@ -20,14 +23,10 @@ monitors.factory('monitorsService', (Restangular, $uibModal, $rootScope) => {
             })
         },
         create = data => {
-            return Restangular.all('monitors').post(data,undefined, {
-                Authorization: 'jwt=' + $rootScope.jwt
-            });
+            return Restangular.all('monitors').post(data,undefined, headers);
         },
         remove = id => {
-            return Restangular.one('monitors',id).remove(undefined, {
-                Authorization: 'jwt=' + $rootScope.jwt
-            });
+            return Restangular.one('monitors',id).remove(undefined, headers);
         }
 
     return {

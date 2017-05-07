@@ -2,7 +2,7 @@ auth.factory('authService', (Restangular, $rootScope, $state) => {
     const login = data => Restangular.all('login').post(data),
         create = data => Restangular.all('register').post(data),
         logout = () => Restangular.all('logout').post({}, undefined, {
-            Authorization: 'jwt=' + $rootScope.jwt
+            Authorization: $rootScope.jwt
         }).then(res => {
             $state.go('login');
         });

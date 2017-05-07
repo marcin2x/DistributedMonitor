@@ -8,13 +8,29 @@ app.use(express.static('./src'));
 
 
 app.use('/api', function (req, res, next) {
-    // res.setHeader('Last-Modified', (new Date()).toUTCString());
-    console.log(req.url);
-    if(req.url === '/login' || req.url === '/register'){
+    console.log(req.params);
+    console.log(req.query);
+    const r = `${req.method} ${req.url}`;
+    const authReq = [
+        'POST /login',
+        'POST /register',
+        'POST /logout',
+        'GET /monitors',
+        'POST /monitors',
+        'DELET /monitors/*'
+    ]
+    if(authReq.indexOf(r) > -1) {
         proxy.web(req, res, {
             target: {
                 host: '52.174.179.132',
                 port: '8081'
+            }
+        });
+    }else if(req.query.address && req.query.port){
+        proxy.web(req, res, {
+            target: {
+                host: req.query.address,
+                port: req.query.port
             }
         });
     }else{

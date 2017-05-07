@@ -1,5 +1,5 @@
 monitors.controller('monitorInfoCtrl',  ($scope,$filter, $interval, $timeout, $state, $stateParams, monitorsService, measurementsService, hostRestangular) => {
-
+    let interval = '';
     $scope.remove = id => {
         monitorsService.remove(id).then(succ => {
             $state.go('base.dashboard');
@@ -29,24 +29,26 @@ monitors.controller('monitorInfoCtrl',  ($scope,$filter, $interval, $timeout, $s
         $scope.series = [$scope.hostName];
     }
 
+    const setInterval = () => {
+        if(interval) interval.cancel();
+        interval = $interval(() => {
+            measurementsService.valuesById($scope.measurementId).then(values => {
+                dataToChart(values.plain());
+            })
+        }, 3000);
+    }
+
     $scope.selectMeasurement = id => {
         $scope.measurementId = id;
         measurementsService.valuesById(id).then(values => {
             dataToChart(values.plain());
+            setInterval();
         })
     }
     $scope.select = host => {
         $scope.hostName = host.name;
         $scope.selectMeasurement(host.measurements[0].id);
     };
-
-    $interval(() => {
-        measurementsService.valuesById($scope.measurementId).then(values => {
-            dataToChart(values.plain());
-        })
-    }, 3000);
-
-
 
     monitorsService.get($stateParams.monitorId).then(monitor => {
         $scope.monitor = monitor;

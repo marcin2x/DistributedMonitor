@@ -30,12 +30,15 @@ monitors.controller('monitorInfoCtrl',  ($scope,$filter, $interval, $timeout, $s
     }
 
     const setInterval = () => {
-        if(interval) interval.cancel();
+        if(interval) {
+            $interval.cancel(interval)
+        }
         interval = $interval(() => {
             measurementsService.valuesById($scope.measurementId).then(values => {
                 dataToChart(values.plain());
             })
         }, 3000);
+
     }
 
     $scope.selectMeasurement = id => {

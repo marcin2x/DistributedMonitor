@@ -1,15 +1,19 @@
-monitors.factory('measurementsService', (Restangular, hostRestangular) => {
+monitors.factory('measurementsService', (Restangular, $rootScope) => {
+    const query = () => ({
+        address: $rootScope._address,
+        port: $rootScope._port
+    });
     const values = () => {
-            return hostRestangular.rest().one('measurements/values').getList();
+            return Restangular.one('measurements/values').customGET('', query());
         },
         valuesById = id => {
-            return hostRestangular.rest().one(`measurements/${id}/values`).getList();
+            return Restangular.one(`measurements/${id}/values`).customGET('', query());
         },
         valuesWithParams = params => {
-            return hostRestangular.rest().one('measurements/values').customGET('',params);
+            return Restangular.one('measurements/values').customGET('',Object.assign({},params, query()));
         },
         getHosts = () => {
-            return hostRestangular.rest().one('hosts').getList();
+            return Restangular.one('hosts').customGET('', query());
         };
 
 

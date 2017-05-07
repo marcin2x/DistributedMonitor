@@ -33,7 +33,6 @@ monitors.controller('monitorInfoCtrl',  ($scope,$filter, $interval, $timeout, $s
         $scope.measurementId = id;
         measurementsService.valuesById(id).then(values => {
             dataToChart(values.plain());
-
         })
     }
     $scope.select = host => {
@@ -42,13 +41,9 @@ monitors.controller('monitorInfoCtrl',  ($scope,$filter, $interval, $timeout, $s
     };
 
     $interval(() => {
-        let val = $scope.values.slice();
-        val.shift();
-        val.push({
-            date: moment(new Date()).valueOf(),
-            value: Math.floor((Math.random() * 100) + 1)
-        });
-        dataToChart(val);
+        measurementsService.valuesById(id).then(values => {
+            dataToChart(values.plain());
+        })
     }, 3000);
 
 

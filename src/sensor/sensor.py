@@ -3,13 +3,20 @@ import psutil
 import json
 import time
 import socket
+import sys
+import pickle
+from functools import reduce
+sys.path.append("../../")
+print(sys.path)
+from src.common.TCP_messages import *
+
 
 BUFFER_SIZE = 1024
 QUIET_MODE = False
 
 def prepare_metadata(metadata):
     fields={
-            "CPU Core count": lambda: psutil.cpu_count(),
+            "CPU Core count": lambda: psutil.NUM_CPUS,
             "Total RAM": lambda: psutil.virtual_memory().total
             }
     result = []
@@ -20,14 +27,9 @@ def prepare_metadata(metadata):
 
 def prepare_register(data, sensor_id = ""):
     identifier = str(uuid.uuid4()) if sensor_id == "" else sensor_id
+    name = "some PC name"
     measurements = [{"name": x } for x in data["measurements"]]
-    result = {"type":"register",
-            "body": {
-                "identifier": identifier,
-                "name": "some PC name", # TODO Menage to generate name
-                "measurements": measurements,
-                "metadata": prepare_metadata(data["metadata"])
-                }}
+    result = SensorRegisterRequest(identifier, name, measurements, prepare_metadata(data["metadata"]))
     return result
 
 def prepare_data(response):
@@ -35,12 +37,13 @@ def prepare_data(response):
             "CPU": lambda: reduce(lambda x, y : x+y ,[psutil.cpu_percent(interval=0.1) for indx in range(10)])/10,
             "RAM": lambda: psutil.virtual_memory().percent
             }
-    result = {"type": "data", "body": {"sensor_id": response["body"]["sensor_id"], "values": []}}
-    for measurement in response["body"]["measurements"]:
-        if measurement["measurement_name"] in fields.keys():
-            result["body"]["values"].append({
-                                "measurement_id": measurement["measurement_id"],
-                                "measurement_value": fields[measurement["measurement_name"]]()})
+    data = []
+    for measurement in response.measurements:
+        if measurement["measurements_name"] in fields.keys():
+            data.append({
+                                "measurement_id": measurement["measurements_id"],
+                                "measurement_value": fields[measurement["measurements_name"]]()})
+            result = SensorDataRequest(response.sensor_id, data)
     return result
 
 def register(config, conn, sensor_id=""):
@@ -49,41 +52,51 @@ def register(config, conn, sensor_id=""):
         print ("Register: ", reg_data)
     s = socket.socket()
     s.connect(conn)
-    s.sendall(json.dumps(reg_data))
-    response =  "" 
+    s.sendall(serializer.serialize(reg_data))
+    response =  bytes() 
     while True:
         chunk = s.recv(BUFFER_SIZE)
         response += chunk
         if len(chunk) < BUFFER_SIZE:
             break
     
-    response = json.loads(response)
+    response = serializer.deserialize_response(response)
     return response
 
-with open('sensor_config.json') as data_file:
-    config = json.load(data_file)
 
-conn_tuple = (config["host"], config["port"])
-response = register(config,conn_tuple)
-rtime = time.time()
+def run():
+    with open('sensor_config.json') as data_file:
+        config = json.load(data_file)
+
+    conn_tuple = (config["host"], config["port"])
+    reg_response = register(config,conn_tuple)
+    rtime = time.time()
  
 
-while True:
-    dtime = time.time()
-    if time.time() - rtime > config["register_interval"]:
-        rtime = time.time()
-        response = register(config, conn_tuple, response["body"]["sensor_id"])
+    while True:
+        dtime = time.time()
+        if time.time() - rtime > config["register_interval"]:
+            rtime = time.time()
+            reg_response = register(config, conn_tuple, reg_response.sensor_id)
+            if not QUIET_MODE:
+                print("Register response: ", reg_response.get_message_body())
+        data = prepare_data(reg_response)
+        s = socket.socket()
+        s.connect(conn_tuple)
+        s.sendall(serializer.serialize(data))
+        data_response = bytes()
+        while True:
+            chunk = s.recv(BUFFER_SIZE)
+            data_response += chunk
+            if len(chunk) < BUFFER_SIZE:
+                break
+        data_response = serializer.deserialize_response(data_response)
+        s.close()
         if not QUIET_MODE:
-            print("Monitor response: ", response)
-    data = prepare_data(response)
-    s = socket.socket()
-    s.connect(conn_tuple)
-    s.sendall(json.dumps(data))
-    s.close()
-    if not QUIET_MODE:
-        print ("Data: ", data)
-    
-    interval = config["data_interval"] - time.time() + dtime
-    if interval > 0 :
-        time.sleep(interval)
-
+            print ("Data: ", data.get_message_body())
+            print ("Data response :", data_response.get_message_body())
+        
+        interval = config["data_interval"] - time.time() + dtime
+        if interval > 0 :
+            time.sleep(interval)
+        

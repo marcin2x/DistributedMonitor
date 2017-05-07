@@ -10,12 +10,21 @@ app.use(express.static('./src'));
 app.use('/api', function (req, res, next) {
     // res.setHeader('Last-Modified', (new Date()).toUTCString());
     console.log(req.url);
-    proxy.web(req, res, {
-        target: {
-            host: '127.0.0.1',
-            port: '3333'
-        }
-    });
+    if(req.url === '/login' || req.url === '/register'){
+        proxy.web(req, res, {
+            target: {
+                host: '52.174.179.132',
+                port: '8081'
+            }
+        });
+    }else{
+        proxy.web(req, res, {
+            target: {
+                host: '127.0.0.1',
+                port: '3333'
+            }
+        });
+    }
 });
 
 app.use('/', (req, res) => {

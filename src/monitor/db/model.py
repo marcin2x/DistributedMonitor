@@ -75,7 +75,7 @@ class DatabaseModel(Model):
             s = Sensor.create(identifier=request.identifier, name=request.name)
 
         for m in request.measurements:
-            Measurement.get_or_create(name=m['name'], description=m['description'], sensor=s)
+            Measurement.get_or_create(name=m['name'], description=m.get('description',''), sensor=s)
         for m in request.metadata:
             try:
                 m1 = Metadata.get(key=m['key'], sensor=s)
@@ -195,7 +195,7 @@ class DatabaseModel(Model):
         return [{"id":s.id,
                  "name":s.name,
                  "measurements":[{"id":m.id,
-                                  "description":m.description}
+                                  "description":m.name}
                                   for m in s.measurements],
                  "metadata": [{"key": m.key,
                                "value": m.value}

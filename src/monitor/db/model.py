@@ -1,6 +1,6 @@
 from peewee import *
 import datetime
-from src.common.TCP_messages import *
+from ...common.TCP_messages import *
 import json
 import os.path
 from playhouse.shortcuts import model_to_dict
@@ -75,7 +75,7 @@ class DatabaseModel(Model):
             s = Sensor.create(identifier=request.identifier, name=request.name)
 
         for m in request.measurements:
-            Measurement.get_or_create(name=m['name'], sensor=s)
+            Measurement.get_or_create(name=m['name'], description=m['description'], sensor=s)
         for m in request.metadata:
             try:
                 m1 = Metadata.get(key=m['key'], sensor=s)

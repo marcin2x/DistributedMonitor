@@ -1,16 +1,1 @@
-{
-	"host": "52.232.125.49",
-	"port": 8000,
-	"register_interval": 30,
-	"data_interval": 5,
-	"measurements":
-	[
-		"CPU",
-		"RAM"
-	],
-	"metadata":
-	[
-		"CPU Core count",
-		"Total RAM"
-	]
-}
+{"host": "52.232.125.49", "data_interval": 5, "identifier": "", "metadata": ["CPU Core count", "Total RAM"], "register_interval": 0, "port": 8000, "measurements": ["CPU", "RAM"]}

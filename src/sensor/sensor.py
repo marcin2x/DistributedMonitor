@@ -73,7 +73,7 @@ def run():
     if config["identifier"] == "":
         config["identifier"] = generate_id()
         with open("sensor_config.json","w") as con_file:
-            json.dump(config, con_file)
+            json.dump(config, con_file,sort_keys=True, indent=4)
     
 
     conn_tuple = (config["host"], config["port"])

@@ -89,6 +89,7 @@ ENV/
 .ropeproject
 /.idea
 
+logs/
 
 #webapp
 src/webapp/node_modules
@@ -96,3 +97,4 @@ src/webapp/src/components
 src/webapp/src/css
 src/webapp/src/app.js.map
 src/webapp/src/app.js
+

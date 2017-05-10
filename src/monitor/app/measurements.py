@@ -1,6 +1,7 @@
 from flask import request, jsonify
 
 from app import app, errors
+from src.monitor.db.model import database
 
 
 @app.route('/measurements', methods=['POST', 'GET'])
@@ -63,17 +64,12 @@ def update(measurement_id):
 
 @app.route('/measurements/values', methods=['GET'])
 def get_values():
-    measurement_names = request.args.get('measurement-names')
-    time_from = request.args.get('time-from')
-    time_to = request.args.get('time-to')
-    count = request.args.get('count')
-    offset = request.args.get('offset')
-    if count is None:
-        count = 50
-    if offset is None:
-        offset = 0
+    return jsonify(database.getMeasurementValues(request=request))
 
-    return jsonify(list())
+
+@app.route('/measurements/<int:measurement_id>/values', methods=['GET'])
+def get_values_for_measurement_id(measurement_id):
+    return jsonify(database.getMeasurementValuesById(request=request, id=measurement_id))
 
 
 @app.route('/measurements/complex', methods=['POST'])

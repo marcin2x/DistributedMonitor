@@ -1,0 +1,60 @@
+from flask import request, jsonify
+from src.authentication_service.rest import service, errors
+from src.authentication_service.data.repositories import MonitorRepository, UserRepository
+from src.authentication_service.rest.config import getUserContext
+
+
+userRepository = UserRepository()
+monitorRepository = MonitorRepository()
+
+@service.route('/monitors', methods=['GET'])
+def getMonitors():
+
+    monitors = monitorRepository.findAll()
+
+    result = []
+    for monitor in monitors:
+        result.append({
+          'id' : monitor.id,
+          'user_id' : monitor.user.id,
+          'name' : monitor.name,
+          'address' : monitor.address,
+          'port' : monitor.port
+        })
+
+    return jsonify(result)
+
+
+@service.route('/monitors', methods=['POST'])
+def addMonitor():
+   data = request.get_json()
+
+   if 'name' not in data or 'port' not in data or 'address' not in data:
+       raise errors.RestError(message='Invalid request', status_code=400)
+   elif not monitorRepository.isUnique(data['name']):
+       raise errors.RestError(message='Monitor already exists', status_code=409)
+
+   user = userRepository.findById(getUserContext()['id'])
+   monitor = monitorRepository.save(data['name'], data['port'], data['address'], user)
+
+   return jsonify(monitor.get_id())
+
+
+@service.route('/monitors', methods=['DELETE'])
+def deleteMonitor():
+
+    if 'monitor_id' not in request.args:
+        raise errors.RestError(message='Invalid request', status_code=400)
+    monitor_id = request.args.get('monitor_id')
+    monitor = monitorRepository.find(monitor_id)
+    if monitor == None:
+        raise errors.RestError(message='Monitor with provided id does not exist', status_code=400)
+    if not monitor.user.id == getUserContext()['id']:
+        raise errors.RestError(message='No required permission for monitor deletion', status_code=403)
+
+    monitorRepository.delete(monitor)
+
+    return service.response_class(
+        status=200,
+        mimetype='application/json'
+    )

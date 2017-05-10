@@ -1,0 +1,8 @@
+{
+	"$schema": "http://json-schema/draft-04/schema#",
+	"description": "a measurements list",
+	"type": "array",
+	"items": {
+		"$ref": "measurement.json"
+	}
+}

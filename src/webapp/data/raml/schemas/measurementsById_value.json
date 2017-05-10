@@ -1,0 +1,21 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "a values object",
+    "type": "object",
+    "properties": {
+        "value": {
+            "description": "the measurement value",
+            "type": "number"
+        },
+        "date": {
+            "description": "the measurement date",
+            "type": "string",
+            "format": "date"
+        }
+    },
+    "required": [
+        "value",
+        "date"
+    ],
+    "additionalProperties": false
+}

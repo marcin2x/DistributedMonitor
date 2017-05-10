@@ -1,0 +1,26 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"description": "a register object for POST",
+	"type": "object",
+	"properties": {
+		"login": {
+			"description": "the user's login",
+			"type": "string",
+			"format": "email"
+		},
+		"password": {
+			"description": "the user's password",
+			"type": "string"
+		},
+		"password_confirmation": {
+			"description": "the user's password_confirmation ",
+			"type": "string"
+		}
+	},
+	"required": [
+		"login",
+		"password",
+		"password_confirmation"
+	],
+	"additionalProperties": false
+}

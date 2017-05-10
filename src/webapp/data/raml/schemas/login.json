@@ -1,0 +1,21 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"description": "a login object for POST",
+	"type": "object",
+	"properties": {
+		"login": {
+			"description": "the user's login",
+			"type": "string",
+			"format": "email"
+		},
+		"password": {
+			"description": "the user's password",
+			"type": "string"
+		}
+	},
+	"required": [
+		"login",
+		"password"
+	],
+	"additionalProperties": false
+}

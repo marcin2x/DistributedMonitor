@@ -1,0 +1,57 @@
+<div class="row">
+    <div class="col-lg-6">
+        <h1 class="page-header">{{monitor.name}}</h1>
+    </div>
+    <div class="col-lg-6">
+        <h1 class="page-header">
+            <button type="button" class="btn btn-danger" ng-click="remove(monitor.id)"> Delete monitor </button>
+        </h1>
+    </div>
+</div>
+<div class="row">
+    <uib-tabset>
+        <uib-tab
+            ng-repeat="host in hosts"
+            select="select(host)"
+            index="$index"
+            heading="{{host.name}}">
+            <div class="measurementsTabList">
+                <uib-tabset type="pills">
+                    <uib-tab
+                            ng-repeat="m in host.measurements"
+                            index="$index"
+                            heading="{{m.description}}"
+                            select="selectMeasurement(m.id)"
+                    ></uib-tab>
+                </uib-tabset>
+            </div>
+        </uib-tab>
+    </uib-tabset>
+    <canvas
+            id="line"
+            class="chart chart-line"
+            chart-data="data"
+            chart-options="options"
+            chart-series="series">
+    </canvas>
+</div>
+
+<div class="row">
+    <h2>Last measurements:</h2>
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Host name</th>
+                <th>Value</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="value in allValues">
+                <td>{{value.host_name}}</td>
+                <td>{{value.value}}</td>
+                <td>{{value.date | timeago}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,30 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "a user object",
+    "type": "object",
+    "properties": {
+        "measurment_id": {
+            "description": "the measurements id",
+            "type": "number"
+        },
+        "host_name": {
+            "description": "the host name",
+            "type": "string"
+        },
+        "value": {
+            "description": "the measurement value",
+            "type": "number"
+        },
+        "date": {
+            "description": "the measurement date",
+            "type": "string",
+            "format": "date"
+        }
+    },
+    "required": [
+        "measurment_id",
+        "measurment_name",
+        "values"
+    ],
+    "additionalProperties": false
+}

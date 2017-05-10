@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "an error object",
+    "type": "object",
+    "properties": {
+        "code": {
+            "description": "the code of the error",
+            "type": "integer"
+        },
+        "message": {
+            "description": "the message of the error",
+            "type": "string"
+        },
+        "data": {
+            "description": "additional data describing the error",
+            "type": "object"
+        }
+    },
+    "required": [
+        "code",
+        "message"
+    ]
+}

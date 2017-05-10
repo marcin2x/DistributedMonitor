@@ -1,0 +1,30 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "a measurements data post object",
+    "type": "object",
+    "properties": {
+        "measurements_id": {
+            "description": "the sensor id",
+            "type": "number"
+        },
+        "jwt": {
+            "description": "the jwt string",
+            "type": "string"
+        },
+        "time-from": {
+            "description": "the measurements time-from",
+            "format": "date-time"
+        },
+        "time-to": {
+            "description": "the measurements time-to",
+            "format": "date-time"
+        }
+    },
+    "required": [
+        "measurements_id",
+        "jwt",
+        "time-from",
+        "time-to"
+    ],
+    "additionalProperties": false
+}

@@ -1,0 +1,25 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "a measurements post object",
+    "type": "object",
+    "properties": {
+        "sensor_name": {
+            "description": "the sensor name",
+            "type": "string"
+        },
+        "measurement_name": {
+            "description": "the measurements name",
+            "type": "string"
+        },
+        "metadata": {
+            "description": "measurements metadata",
+            "type": "object"
+        }
+    },
+    "required": [
+        "sensor_name",
+        "measurement_name",
+        "metadata"
+    ],
+    "additionalProperties": false
+}

@@ -91,12 +91,10 @@ ENV/
 
 logs/
 
-# webapp
-app/node_modules
-app/src/components
-app/src/css
-app/src/app.js.map
-app/src/app.js
+#webapp
+src/webapp/node_modules
+src/webapp/src/components
+src/webapp/src/css
+src/webapp/src/app.js.map
+src/webapp/src/app.js
 
-#databases
-*.db

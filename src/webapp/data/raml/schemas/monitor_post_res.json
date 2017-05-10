@@ -1,0 +1,15 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "a monitor post response object",
+    "type": "object",
+    "properties": {
+        "monitor_id": {
+            "description": "the monitor id",
+            "type": "number"
+        }
+    },
+    "required": [
+        "monitor_id"
+    ],
+    "additionalProperties": false
+}

@@ -1,0 +1,33 @@
+html, body, div, span{
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+
+
+.error {
+  transition: .5s linear all;
+  -webkit-transition: .5s linear all;
+  color: white;
+  .panel{
+    background: #ff6d58;
+  }
+}
+
+.error.ng-enter {
+  opacity: 0;
+}
+
+.error.ng-enter.ng-enter-active {
+  opacity: 1;
+}
+
+.error.ng-leave {
+  opacity: 1;
+}
+
+.error.ng-leave.ng-leave-active {
+  opacity: 0;
+}
+

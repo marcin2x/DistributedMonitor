@@ -97,10 +97,9 @@ class DatabaseModel(Model):
         self.database.create_tables([Sensor, Metadata, Measurement, ComplexMeasurement, MeasurementValue])
 
     def connect(self):
-        try:
+        if self.database.is_closed():
             self.database.connect()
-        except OperationalError:
-            ...
+
 
     def close(self):
         if not self.database.is_closed():

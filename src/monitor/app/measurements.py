@@ -7,16 +7,7 @@ from src.monitor.db.model import database
 @app.route('/measurements', methods=['POST', 'GET'])
 def measurements():
     if request.method == 'GET':
-        names = request.args.get('names')
-        count = request.args.get('count')
-        offset = request.args.get('offset')
-
-        if count is None:
-            count = 50
-        if offset is None:
-            offset = 0
-
-        return jsonify(list())
+        return jsonify(database.getComplexMeasurements(request))
 
     elif request.method == 'POST':
         data = request.get_json()

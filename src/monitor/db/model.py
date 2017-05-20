@@ -337,7 +337,8 @@ class DatabaseModel(Model):
         if self.complexBelongsToUser(measurementId, userId):
             ComplexMeasurement.delete().where(ComplexMeasurement.id == measurementId,
                                               ComplexMeasurement.userid == userId).execute()
-
+            return True
+        
     def getComplexMeasurements(self, request):
         names = request.args.get('names') or None
         count = request.args.get('count') or 50

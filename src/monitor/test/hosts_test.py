@@ -22,5 +22,5 @@ class TestHosts(unittest.TestCase):
 
         r = self.app.get('/hosts?name=Lap', content_type='application/json')
         rj = json.loads(r.data.decode("utf-8"))
-        assert len(rj[0]['measurements']) == 2  # 2 measurements for sensor Laptop in test db
+        assert len(rj[0]['measurements']) == 4  # 4 measurements for sensor Laptop in test db
         assert len(rj) == 1

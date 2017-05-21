@@ -308,12 +308,12 @@ class DatabaseModel(Model):
                  }
                 for s in query]
 
-    def createComplexMeasurement(self, request, userId):
-        name = request.args.get('name')
-        type = request.args.get('type')
-        interval = request.args.get('interval')
-        window = request.args.get('window')
-        measurementId = request.args.get('measurement_id')
+    def createComplexMeasurement(self, data, userId):
+        name = data['name']
+        type = data['type']
+        interval = data['interval']
+        window = data['window']
+        measurementId = data['measurement_id']
 
         if None in [name, type, interval, window, measurementId, userId]:
             raise MissingParameterException
@@ -486,7 +486,7 @@ def createTestData():
         Metadata.create(key="Key1", value='Value1', sensor=s)
         Metadata.create(key="Key2", value='Value2', sensor=s)
         for m in [m1, m2]:
-            for i in range(20):
+            for i in range(10):
                 if m == m1:
                     MeasurementValue.create(value=i * 2.0, measurement=m,
                                             created= datetime.datetime.now() - datetime.timedelta(minutes=i+1))
@@ -494,13 +494,7 @@ def createTestData():
                     MeasurementValue.create(value=i * 2.0, measurement=m,
                                             created=datetime.datetime.now() - datetime.timedelta(seconds=30*(i+1)))
 
-        class Request:
-            args = {}
-
-        a = Request
-        a.args = {"name": "CPU-Complex", "type": "min", "interval": 5, "window": 30, "measurement_id": 1}
-        database.createComplexMeasurement(a, "test")
-        a.args = {"name": "GPU-Complex", "type": "avg", "interval": 5, "window": 30, "measurement_id": 4}
-        database.createComplexMeasurement(a, "test1")
+    database.createComplexMeasurement({"name": "CPU-Complex", "type": "min", "interval": 5, "window": 30, "measurement_id": 1}, "test")
+    database.createComplexMeasurement({"name": "GPU-Complex", "type": "avg", "interval": 5, "window": 30, "measurement_id": 2}, "test1")
 
 # createTestData()

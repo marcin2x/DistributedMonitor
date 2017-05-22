@@ -9,8 +9,8 @@ monitorRepository = MonitorRepository()
 
 @service.route('/monitors', methods=['GET'])
 def getMonitors():
-
-    monitors = monitorRepository.findAll()
+    user = userRepository.findById(getUserContext()['id'])
+    monitors = monitorRepository.findAllForUser(user)
 
     result = []
     for monitor in monitors:

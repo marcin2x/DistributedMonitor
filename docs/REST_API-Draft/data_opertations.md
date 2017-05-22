@@ -20,7 +20,7 @@ Odpowiedź:
 | name | wymagany | nazwa pomiaru |  |
 | type | wymagany | typ zlozonego pomiaru(avg, min, max) | |
 | interval | wymagany | co ile minut obliczany pomiar złożony | |
-| window | wymagany | w jakim okresie tworzony byl pomiar | |
+| window | wymagany | z ilu ostatnich minut jest obliczany pomiar złożony | |
 | measurement_id | wymagany | id pomiaru z którego tworzony jest pomiar złożony | |
 | user_id | wymagany | id użytkownika do którego należy pomiar | |
 
@@ -33,7 +33,7 @@ Odpowiedź:
             name : [string],
 			type : [string],
 			interval : [long],
-			window : [date interval]
+			window : [long]
 			measurement_id : [long],
 			user_id: [long]
         },
@@ -42,7 +42,7 @@ Odpowiedź:
             name : [string],
 			type : [string],
 			interval : [long],
-			window : [date interval]
+			window : [long]
 			measurement_id : [long],
 			user_id: [long]
         },
@@ -157,6 +157,7 @@ Parametry:
 | name | wymagany | unikalna nazwa nowo tworzonego pomiaru | |
 | type | wymagany | typ zlozonego pomiaru(avg, min, max) | |
 | interval | wymagany | co ile minut obliczac pomiar | |
+| window | wymagany | z ilu ostatnich minut jest obliczany pomiar złożony | |
 | measurement_id | wymagany | id pomiaru z którego tworzony jest pomiar złożony | |
 
 

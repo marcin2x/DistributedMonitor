@@ -1,14 +1,15 @@
+import os
 import test
 from unittest import TestLoader, TextTestRunner, TestSuite
 
 from src.monitor.db import model
+
 
 model.createTestData()
 model.database.close()
 
 loader = TestLoader()
 suite = TestSuite((
-        loader.loadTestsFromTestCase(test.auth_test.TestAuth),
         loader.loadTestsFromTestCase(test.measurements_test.TestMeasurements),
         loader.loadTestsFromTestCase(test.hosts_test.TestHosts),
         ))

@@ -11,10 +11,10 @@
 <GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.client.login.LoginController">
     <children>
         <Label text="Login" />
-        <TextField fx:id="login" GridPane.columnIndex="1" />
+        <TextField fx:id="login" onAction="#onEnter" GridPane.columnIndex="1" />
         <Label text="Hasło" GridPane.rowIndex="1" />
-        <PasswordField fx:id="password" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-        <Button fx:id="loginButton" mnemonicParsing="false" onAction="#login" text="Zaloguj" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <PasswordField fx:id="password" onAction="#onEnter" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <Button fx:id="loginButton" mnemonicParsing="false" onAction="#onEnter" text="Zaloguj" GridPane.columnIndex="1" GridPane.rowIndex="2" />
     </children>
     <columnConstraints>
         <ColumnConstraints />

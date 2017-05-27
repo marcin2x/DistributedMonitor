@@ -1,5 +1,6 @@
 package pl.client.login;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -31,6 +32,10 @@ public class LoginController {
     private Stage stage;
 
     @FXML
+    public void onEnter(ActionEvent ae) {
+        login();
+    }
+
     private void login() {
         RestTemplate rt = new RestTemplate();
         rt.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
@@ -47,9 +52,7 @@ public class LoginController {
             MonitorsController controller = fxmlLoader.getController();
             controller.loadMonitors(body);
             stage.setScene(new Scene(root));
-        } catch (RestClientException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (RestClientException | IOException e) {
             e.printStackTrace();
         }
     }

@@ -19,4 +19,12 @@ public class Utils {
         }
         return prop.getProperty("auth.address");
     }
+
+    public String getMesurementsValues(String monitorAddress, String monitorPort){
+        return "http://" + monitorAddress + ":" + monitorPort + "/measurements/values?order=desc";
+    }
+
+    public String getHostsAddress(String monitorAddress, String monitorPort){
+        return "http://" + monitorAddress + ":" + monitorPort + "/hosts";
+    }
 }

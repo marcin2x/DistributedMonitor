@@ -51,6 +51,7 @@ public class LoginController {
             Parent root = fxmlLoader.load();
             MonitorsController controller = fxmlLoader.getController();
             controller.loadMonitors(body);
+            controller.setStage(stage);
             stage.setScene(new Scene(root));
         } catch (RestClientException | IOException e) {
             e.printStackTrace();

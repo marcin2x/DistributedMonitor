@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.client.host.HostsController">
+<children>
+    <Label text="CPU" />
+    <Button fx:id="backButton" mnemonicParsing="false" onAction="#onBack" text="Back" GridPane.halignment="RIGHT" GridPane.columnIndex="1" />
+    <TableView fx:id="cpuMeasurements" GridPane.rowIndex="1" GridPane.columnSpan="2">
+        <columns>
+            <TableColumn prefWidth="75.0" text="VALUE" fx:id="cpuValue"/>
+        </columns>
+    </TableView>
+    <Label text="RAM" GridPane.rowIndex="2"/>
+    <TableView fx:id="ramValues" GridPane.rowIndex="3" GridPane.columnSpan="2">
+        <columns>
+            <TableColumn prefWidth="75.0" text="VALUE" fx:id="ramValue"/>
+        </columns>
+    </TableView>
+</children>
+<columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" prefWidth="300"/>
+    <ColumnConstraints hgrow="SOMETIMES" prefWidth="300"/>
+</columnConstraints>
+<rowConstraints>
+    <RowConstraints />
+    <RowConstraints vgrow="SOMETIMES" prefHeight="200"/>
+    <RowConstraints />
+    <RowConstraints vgrow="SOMETIMES" prefHeight="200"/>
+</rowConstraints>
+</GridPane>

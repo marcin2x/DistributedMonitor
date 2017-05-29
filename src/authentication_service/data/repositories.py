@@ -1,4 +1,5 @@
 from src.authentication_service.data.models import User, Monitor
+from peewee import DoesNotExist
 
 class UserRepository:
 
@@ -30,10 +31,16 @@ class MonitorRepository:
         monitor.delete_instance()
 
     def findAllForUser(self, user):
-        return list(Monitor.select().where(Monitor.user == user))
+        try:
+            return list(Monitor.select().where(Monitor.user == user))
+        except DoesNotExist:
+            return []
 
     def findAll(self):
-        return list(Monitor.select());
+        try:
+            return list(Monitor.select())
+        except DoesNotExist:
+            return []
 
     def isUnique(self, name):
         return len(Monitor.select().where(Monitor.name == name)) == 0

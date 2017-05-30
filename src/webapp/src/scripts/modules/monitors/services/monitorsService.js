@@ -13,6 +13,15 @@ monitors.factory('monitorsService', (Restangular, $uibModal, $rootScope) => {
                 backdrop: true
             }).result;
         },
+       addComplexModal = () => {
+       console.log("Add modal complex");
+            return $uibModal.open({
+                templateUrl: 'scripts/modules/monitors/views/add-complex-modal.html',
+                controller: 'addComplexModalCtrl',
+                size: 'md',
+                backdrop: true
+            }).result;
+       },
         get = id => {
             return new Promise((resolve,reject) => {
                 getMonitors().then(monitors => {
@@ -33,6 +42,7 @@ monitors.factory('monitorsService', (Restangular, $uibModal, $rootScope) => {
         getMonitors,
         get,
         addModal,
+        addComplexModal,
         create,
         remove
     };

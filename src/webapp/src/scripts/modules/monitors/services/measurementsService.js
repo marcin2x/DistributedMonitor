@@ -1,5 +1,6 @@
 monitors.factory('measurementsService', (Restangular, $rootScope) => {
     const query = () => ({
+        order: "desc",
         address: $rootScope._address,
         port: $rootScope._port
     });

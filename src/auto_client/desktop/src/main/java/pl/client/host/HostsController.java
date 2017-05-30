@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -18,19 +19,16 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import pl.client.login.JwtString;
-import pl.client.monitor.Monitor;
-import pl.client.monitor.Monitors;
 import pl.client.monitor.MonitorsController;
 import pl.client.util.Utils;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -39,12 +37,14 @@ import java.util.stream.Stream;
  */
 public class HostsController {
 
+    @FXML
+    public ComboBox<Long> intervalComboBox;
     ObservableList<Measurement> cpuData = FXCollections.observableArrayList();
     @FXML
     public TableColumn<Measurement, Double> cpuValue;
     @FXML
     public TableView<Measurement> cpuMeasurements;
-
+    ObservableList<Long> options = FXCollections.observableArrayList(15L, 30L, 45L, 60L);
     ObservableList<Measurement> ramData = FXCollections.observableArrayList();
     @FXML
     public TableColumn<Measurement, Double> ramValue;
@@ -53,6 +53,9 @@ public class HostsController {
 
     @FXML
     private Button backButton;
+
+    private Timer timer;
+
     @FXML
     public void onBack(ActionEvent ae) {
         backToMonitors();
@@ -66,17 +69,21 @@ public class HostsController {
     public void initialize() {
         cpuValue.setCellValueFactory(new PropertyValueFactory<Measurement, Double>("cpu_value"));
         ramValue.setCellValueFactory(new PropertyValueFactory<Measurement, Double>("ram_value"));
+        intervalComboBox.setItems(options);
+        timer = new Timer();
 
-        new java.util.Timer().schedule(
-                new java.util.TimerTask() {
-                    @Override
-                    public void run() {
-                        reload();
-                    }
-                },
-                5000,
-                60000
-        );
+        intervalComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            timer.cancel();
+            timer.schedule(new java.util.TimerTask() {
+                               @Override
+                               public void run() {
+                                   reload();
+                               }
+                           },
+                    5000,
+                    newValue * 1000);
+        });
+        intervalComboBox.setValue(15L);
     }
 
     public void loadHosts(JwtString jwtString, String monitorAddress, String monitorPort) {
@@ -136,13 +143,12 @@ public class HostsController {
         reloadData();
     }
 
-    private void reloadData()
-    {
+    private void reloadData() {
         cpuMeasurements.setItems(cpuData);
         ramMeasurements.setItems(ramData);
     }
 
-    private void backToMonitors(){
+    private void backToMonitors() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../monitor/monitors.fxml"));
             Parent root = fxmlLoader.load();

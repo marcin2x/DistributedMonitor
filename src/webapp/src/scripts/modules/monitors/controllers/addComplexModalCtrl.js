@@ -11,9 +11,10 @@ monitors.controller('addComplexModalCtrl', ($scope, $uibModalInstance, monitorsS
         $scope.measurements = host.measurements;
     }
 
-    $scope.addMonitor = (c = true) => {
+    $scope.addComplex = (c = true) => {
+        console.log("Add complex");
         if(c) delete $scope.form.additionalProperty;
-        monitorsService.create($scope.form).then(res => {
+        measurementsService.createComplex($scope.form).then(res => {
             $scope.ok(res.plain());
         }, err => {
             $scope.error = err.data.message;

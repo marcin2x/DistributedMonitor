@@ -5,7 +5,7 @@ monitors.controller('monitorInfoCtrl',  ($scope,$filter, $interval, $timeout, $s
 
     $scope.addComplexModal = () => {
         console.log("Open complex");
-        monitorsService.addComplexModal().then( succ => {
+        measurementsService.addComplexModal().then( succ => {
             console.log("Opended");
         }, err => {
             console.log(err);

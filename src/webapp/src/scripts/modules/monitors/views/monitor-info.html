@@ -40,19 +40,19 @@
 
 <div class="row"  >
     <h2>Last measurements:</h2>
-    <div class="panel tabbed-panel panel-default">
+    <div class="panel tabbed-panel panel-default" ng-init="selected='simple'">
+
         <div class="pull-left">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#tab-default-1" data-toggle="tab">Simple measurement</a></li>
-                <li><a href="#tab-default-2" data-toggle="tab">Complex measurement</a></li>
+                <li ng-class="{'active':selected == 'simple'}"><a ng-click="selected='simple'">Simple measurement</a></li>
+                <li ng-class="{'active':selected == 'complex'}"><a href="" ng-click="selected='complex'">Complex measurement</a></li>
             </ul>
         </div>
-
     </div>
 
     <div class="panel-body">
         <div class="tab-content">
-            <div class="tab-pane fade in active" id="tab-default-1">
+            <div class="tab-pane active"  ng-show="selected==='simple'">
                 <div class="dataTable_wrapper">
                 <table class="table table-striped table-bordered table-hover">
                     <div class="pull-right">
@@ -84,42 +84,14 @@
                 </div>
             </div>
 
-            <div class="tab-pane fade" id="tab-default-2">
-                <div class="dataTable_wrapper">
-                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                        <thead>
-                        <tr>
-                            <th>Sensor name</th>
-                            <th>Measurement</th>
-                            <th>Perdiot of time</th>
-                            <th>Value</th>
-                            <th>Time</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr class="odd gradeX">
-                            <td>LEŃCZYK PC</td>
-                            <td>RAM Usage</td>
-                            <td>5 minutes</td>
-                            <td>99</td>
-                            <td class="center">4s ago</td>
-                        </tr>
-                        <tr class="odd gradeX">
-                            <td>LEŃCZYK PC</td>
-                            <td>RAM Usage</td>
-                            <td>10 minutes</td>
-                            <td>99</td>
-                            <td class="center">4s ago</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <!-- /.table-responsive -->
+            <div class="tab-pane active"  ng-show="selected==='complex'">
+                fill with complex measurementsgit
             </div>
 
         </div>
     </div>
 </div>
+
 
 
 

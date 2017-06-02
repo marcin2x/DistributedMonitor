@@ -20,9 +20,9 @@ monitors.controller('addComplexModalCtrl', ($scope, $uibModalInstance, monitorsS
             $scope.error = err.data.message;
         });
     };
-    
+
     $scope.simulateError = () => {
-        $scope.form.additionalProperty = 'test';
+        $scope.form = {};
         $scope.addMonitor(false);
     }
 

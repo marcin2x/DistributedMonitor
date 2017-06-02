@@ -17,7 +17,7 @@ app.use('/api', function (req, res, next) {
         'POST /logout',
         'GET /monitors',
         'POST /monitors',
-        'DELET /monitors/*'
+        'DELETE /monitors/*'
     ]
     if(authReq.indexOf(r) > -1) {
         proxy.web(req, res, {

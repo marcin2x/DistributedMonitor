@@ -9,27 +9,55 @@
     </div>
 </div>
 
-<div class="navbar navbar-default">
-    <div class="container">
-        <div class="options-group col-md-4">
-            <input
-                type="checkbox"
-                class="refresh-checkbox"
-                ng-model="refreshEnabled"
-                ng-change="setInterval()">
+<div class="row monitor-info-options">
+    <div class="col-lg-4 col-xs-12 form-inline options-group refresh-option">
+        <input
+            type="checkbox"
+            class="refresh-checkbox form-check-input"
+            ng-model="refreshEnabled"
+            ng-disabled="archival"
+            ng-change="setInterval()">
 
-            <label>
-                Refresh chart every
-                <input
-                    type="number"
-                    class="refresh-interval"
-                    ng-disabled="!refreshEnabled"
-                    ng-model="refreshInterval"
-                    ng-change="setInterval()"
-                    min="1" />
-                seconds.
-            </label>
-        </div>
+        <label>
+            Refresh plot every
+            <input
+                type="number"
+                class="refresh-interval"
+                ng-disabled="!refreshEnabled || archival"
+                ng-model="refreshInterval"
+                ng-change="setInterval()"
+                min="1"/>
+            seconds
+        </label>
+    </div>
+
+    <div class="col-lg-3 col-sm-4 form-inline options-group">
+        <label>From:</label>
+        <date-time-picker id="datepickerFrom"
+                          ng-model="timeFrom"
+                          lower-than="datepickerTo"
+                          on-hide="plotArchivalMeasurements">
+        </date-time-picker>
+    </div>
+
+    <div class="col-lg-3 col-sm-4 form-inline options-group">
+        <label>To:</label>
+        <date-time-picker id="datepickerTo"
+                          ng-model="timeTo"
+                          greater-than="datepickerFrom"
+                          on-hide="plotArchivalMeasurements">
+        </date-time-picker>
+    </div>
+
+    <div class="col-lg-2 col-sm-4 col-xs-12 options-group">
+        <button class="btn btn-danger" ng-click="resetTimeFilter()" ng-if="timeFrom || timeTo">Reset</button>
+        <button class="btn btn-info"
+                ng-csv="getDataForExport(data)"
+                csv-header="getSeriesForExport(series)"
+                filename="data.csv"
+                ng-if="data && !refreshEnabled">
+            Export Data
+        </button>
     </div>
 </div>
 

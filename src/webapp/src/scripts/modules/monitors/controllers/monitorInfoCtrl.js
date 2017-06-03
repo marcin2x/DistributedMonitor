@@ -40,7 +40,7 @@ monitors.controller('monitorInfoCtrl',  ($scope,$filter, $interval, $timeout, $s
             $interval.cancel(interval)
         }
 
-        if (!$scope.refreshEnabled || !$scope.refreshInterval || !selectedMeasurements.length) {
+        if ($scope.archival || !$scope.refreshEnabled || !$scope.refreshInterval || !selectedMeasurements.length) {
             return;
         }
 
@@ -52,14 +52,21 @@ monitors.controller('monitorInfoCtrl',  ($scope,$filter, $interval, $timeout, $s
             $scope.data = null;
             $scope.series = null;
 
-            $scope.$apply();
-            return;
+            return $scope.$apply();
         }
 
         let series = [];
 
         let promises = selectedMeasurements.map(measurement => {
             series.push(`${measurement.hostName} [${measurement.description}]`);
+
+            if ($scope.archival) {
+                return measurementsService
+                    .valuesByIdWithParams(measurement.id, {
+                        time_from: $scope.timeFrom,
+                        time_to: $scope.timeTo
+                    }).then(values => prepareDataForChart(values.plain()));
+            }
 
             return measurementsService
                 .valuesById(measurement.id)
@@ -85,6 +92,40 @@ monitors.controller('monitorInfoCtrl',  ($scope,$filter, $interval, $timeout, $s
 
         renderChart();
         $scope.setInterval();
+    };
+
+    $scope.getDataForExport = data => {
+        return Object.keys(data[0]).map(index => {
+            return [data[0][index].x.format()].concat(data.map(dataset => dataset[index].y));
+        });
+    };
+
+    $scope.getSeriesForExport = series => {
+        return ['time'].concat(series);
+    };
+
+    $scope.resetTimeFilter = () => {
+        $scope.timeFrom = null;
+        $scope.timeTo = null;
+
+        $scope.archival = false;
+
+        renderChart();
+    };
+
+    $scope.plotArchivalMeasurements = () => {
+        if ($scope.timeFrom && $scope.timeTo) {
+            $scope.refreshEnabled = false;
+            $scope.archival = true;
+            $scope.setInterval();
+
+            return renderChart();
+        }
+
+        if (!$scope.timeFrom && !$scope.timeTo) {
+            $scope.archival = false;
+            return renderChart();
+        }
     };
 
     monitorsService.get($stateParams.monitorId).then(monitor => {

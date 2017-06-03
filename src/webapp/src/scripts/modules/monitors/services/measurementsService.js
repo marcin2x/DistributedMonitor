@@ -12,6 +12,9 @@ monitors.factory('measurementsService', (Restangular, $rootScope) => {
         valuesWithParams = params => {
             return Restangular.one('measurements/values').customGET('',Object.assign({},params, query()));
         },
+        valuesByIdWithParams = (id, params) => {
+            return Restangular.one(`measurements/${id}/values`).customGET('', Object.assign({}, params, query()));
+        },
         getHosts = () => {
             return Restangular.one('hosts').customGET('', query());
         };
@@ -21,6 +24,7 @@ monitors.factory('measurementsService', (Restangular, $rootScope) => {
         values,
         valuesById,
         valuesWithParams,
+        valuesByIdWithParams,
         getHosts
     };
 });

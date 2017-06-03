@@ -5,6 +5,7 @@ const base = angular.module('base', [
     'ui.bootstrap',
     'restangular',
     'chart.js',
+    'ngCsv',
     'monitors',
     'auth'
 ]);

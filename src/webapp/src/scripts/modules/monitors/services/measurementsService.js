@@ -20,7 +20,6 @@ monitors.factory('measurementsService', (Restangular, $uibModal, $rootScope) => 
             return Restangular.one('hosts').customGET('', query());
         },
         addComplexModal = () => {
-            console.log("Add modal complex");
             return $uibModal.open({
                 templateUrl: 'scripts/modules/monitors/views/add-complex-modal.html',
                 controller: 'addComplexModalCtrl',
@@ -28,12 +27,15 @@ monitors.factory('measurementsService', (Restangular, $uibModal, $rootScope) => 
                 backdrop: true
             }).result;
         },
+        getComplex = () => {
+            return Restangular.all('measurements').customGET('', query());
+        },
         createComplex = data => {
-            console.log(data)
-            // return Restangular.all('measurements').post(data, undefined, headers);
-        }
-
-    ;
+            return Restangular.all('measurements').customPOST(data, undefined , query(), headers);
+        },
+        removeComplex = id => {
+            return Restangular.one('measurements',id).remove(query(), headers);
+        };
 
 
     return {
@@ -42,6 +44,8 @@ monitors.factory('measurementsService', (Restangular, $uibModal, $rootScope) => 
         valuesWithParams,
         getHosts,
         addComplexModal,
-        createComplex
+        createComplex,
+        getComplex,
+        removeComplex
     };
 });

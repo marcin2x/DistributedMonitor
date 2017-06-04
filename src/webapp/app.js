@@ -8,8 +8,6 @@ app.use(express.static('./src'));
 
 
 app.use('/api', function (req, res, next) {
-    console.log(req.params);
-    console.log(req.query);
     const r = `${req.method} ${req.url}`;
     const authReq = [
         'POST /login',
@@ -17,7 +15,7 @@ app.use('/api', function (req, res, next) {
         'POST /logout',
         'GET /monitors',
         'POST /monitors',
-        'DELETE /monitors/*'
+        'DELETE /monitors/*',
     ]
     if(authReq.indexOf(r) > -1) {
         proxy.web(req, res, {

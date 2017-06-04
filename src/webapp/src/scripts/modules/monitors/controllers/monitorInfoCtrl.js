@@ -10,6 +10,9 @@ monitors.controller('monitorInfoCtrl',  ($scope,$filter, $interval, $timeout, $s
                 $scope.hosts = hosts.plain();
                 $scope.select($scope.hosts[0]);
             });
+            measurementsService.getComplex().then(res => {
+                $scope.allComplex = res.plain();
+            });
         });
     }
 

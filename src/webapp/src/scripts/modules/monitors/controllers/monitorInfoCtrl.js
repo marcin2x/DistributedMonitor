@@ -1,17 +1,48 @@
 monitors.controller('monitorInfoCtrl',  ($scope,$filter, $interval, $timeout, $state, $stateParams, $q, monitorsService, measurementsService, hostRestangular) => {
     const DEFAULT_REFRESH_INTERVAL_IN_SECONDS = 10;
 
-    let interval = '';
-    let selectedMeasurements = [];
-
+    $scope.isAddComplexVisible = false;
     $scope.refreshEnabled = true;
     $scope.refreshInterval = DEFAULT_REFRESH_INTERVAL_IN_SECONDS;
+
+    let interval = '',
+        selectedMeasurements = [];
+
+
+    $scope.addComplexModal = () => {
+        measurementsService.addComplexModal().then(succ => {
+            measurementsService.getHosts().then(hosts => {
+                $scope.hosts = hosts.plain();
+                $scope.select($scope.hosts[0]);
+            });
+            measurementsService.getComplex().then(res => {
+                $scope.allComplex = res.plain();
+            });
+        });
+    }
+
+    $scope.search = {
+        host_name: '',
+        description: ''
+    }
+
 
     $scope.remove = id => {
         monitorsService.remove(id).then(succ => {
             $state.go('base.dashboard');
         }, err => {
             console.error(err);
+        })
+    }
+
+    $scope.removeComplex = id => {
+        $scope.complexError = null;
+        measurementsService.removeComplex(id).then(succ => {
+            measurementsService.getComplex().then(res => {
+                $scope.allComplex = res.plain();
+            });
+        }, err => {
+            $scope.complexError = err.data;
         })
     }
 
@@ -30,7 +61,7 @@ monitors.controller('monitorInfoCtrl',  ($scope,$filter, $interval, $timeout, $s
         return sortedValues.map(value => {
             return {
                 x: moment(value.date),
-                y: value.value
+                y: value.value.toFixed(2)
             };
         });
     };
@@ -128,28 +159,46 @@ monitors.controller('monitorInfoCtrl',  ($scope,$filter, $interval, $timeout, $s
         }
     };
 
+    const getMeasurementName =(name, id) => {
+        const host = $scope.hosts.find(host => host.name === name);
+        const me = host.measurements.find(m => m.id === id);
+        return me.description;
+
+    };
+    $scope.filter = () => {
+        if($scope.searchInput[0] === '@'){
+            $scope.search.host_name = $scope.searchInput.slice(1);
+        }
+        if($scope.searchInput[0] === '#'){
+            $scope.search.description = $scope.searchInput.slice(1);
+        }
+    }
+
+
     monitorsService.get($stateParams.monitorId).then(monitor => {
         $scope.monitor = monitor;
         hostRestangular.init(monitor.address, monitor.port);
 
+        measurementsService.getComplex().then(res => {
+            $scope.allComplex = res.plain();
+        });
 
-        $timeout(() => {
-
-
-            measurementsService.getHosts().then(hosts => {
-                $scope.hosts = hosts.plain();
-            });
-
+        measurementsService.getHosts().then(hosts => {
+            $scope.hosts = hosts.plain();
             measurementsService.values().then(res => {
-                $scope.allValues = res.plain();
+                $scope.allValues = res.plain().map(item => {
+                    item.description = getMeasurementName(item.host_name, item.measurement_id);
+                    item.value =  item.value.toFixed(2);
+                    return item;
+                });
+
             })
-        }, 0)
+        });
+
 
     }, err => {
         console.log(err);
         $state.go('base.dashboard');
     });
-
-
 
 });

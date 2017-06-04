@@ -1,0 +1,58 @@
+<div class="dates-lecture-modal">
+    <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">Add complex measurement</h3>
+    </div>
+    <div class="modal-body" id="modal-body">
+        <div class="panel-body">
+            <form role="form" ng-submit="addComplex()" id="add_complex_form">
+                <div class="form-group text-left">
+                    <label>Complex measurement name</label>
+                    <input class="form-control" placeholder="Measurement name" ng-model="form.name" required>
+                </div>
+                <div class="form-group text-left">
+                    <label>Host: </label>
+                    <select class="form-control" placeholder="Host:" ng-change="getMeasurements()" ng-model="host_name"
+                            ng-options="host.name as host.name for host in hosts"
+                            required>}}
+                        <option></option>
+                    </select>
+                </div>
+                <div class="form-group text-left">
+                    <label>Measurement:</label>
+                    <select class="form-control" placeholder="Measurement:" ng-model="form.measurement_id"
+                            ng-options="measurement.id as measurement.description for measurement in measurements"
+                            required>
+                        <option></option>
+                    </select>
+                </div>
+                <div class="form-group text-left">
+                    <label>Type:</label>
+                    <select class="form-control" placeholder="Type:" ng-model="form.type"
+                            ng-options="type.value as type.name for type in types"
+                            required>
+                        <option></option>
+                    </select>
+                </div>
+                <div class="form-group text-left">
+                    <label>Time window:</label>
+                    <input class="form-control" type="number" placeholder="Time window" ng-model="form.window" required>
+                </div>
+                <div class="form-group text-left">
+                    <label>Time interval:</label>
+                    <input class="form-control" type="number" placeholder="Time interval" ng-model="form.interval" required>
+                </div>
+            </form>
+            <div ng-if="error" class="error">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        {{error}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="submit" form="add_complex_form">Add complex</button>
+        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</div>

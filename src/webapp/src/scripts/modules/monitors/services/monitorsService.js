@@ -13,6 +13,7 @@ monitors.factory('monitorsService', (Restangular, $uibModal, $rootScope) => {
                 backdrop: true
             }).result;
         },
+
         get = id => {
             return new Promise((resolve,reject) => {
                 getMonitors().then(monitors => {

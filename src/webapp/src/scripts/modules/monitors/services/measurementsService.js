@@ -1,9 +1,12 @@
-monitors.factory('measurementsService', (Restangular, $rootScope) => {
+monitors.factory('measurementsService', (Restangular, $uibModal, $rootScope) => {
+    const headers = {
+        Authorization: $rootScope.jwt
+    };
     const query = () => ({
         address: $rootScope._address,
         port: $rootScope._port
-    });
-    const values = () => {
+    }),
+        values = () => {
             return Restangular.one('measurements/values').customGET('', query());
         },
         valuesById = id => {
@@ -17,6 +20,23 @@ monitors.factory('measurementsService', (Restangular, $rootScope) => {
         },
         getHosts = () => {
             return Restangular.one('hosts').customGET('', query());
+        },
+        addComplexModal = () => {
+            return $uibModal.open({
+                templateUrl: 'scripts/modules/monitors/views/add-complex-modal.html',
+                controller: 'addComplexModalCtrl',
+                size: 'md',
+                backdrop: true
+            }).result;
+        },
+        getComplex = () => {
+            return Restangular.all('measurements').customGET('', query());
+        },
+        createComplex = data => {
+            return Restangular.all('measurements').customPOST(data, undefined , query(), headers);
+        },
+        removeComplex = id => {
+            return Restangular.one('measurements',id).remove(query(), headers);
         };
 
 
@@ -25,6 +45,10 @@ monitors.factory('measurementsService', (Restangular, $rootScope) => {
         valuesById,
         valuesWithParams,
         valuesByIdWithParams,
-        getHosts
+        getHosts,
+        addComplexModal,
+        createComplex,
+        getComplex,
+        removeComplex
     };
 });

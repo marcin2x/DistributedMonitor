@@ -6,3 +6,29 @@ body{
     padding: 10px;
   }
 }
+
+.refresh-interval {
+  width: 50px;
+}
+
+.monitor-info-options {
+  background-color: $white;
+  border: 1px solid $light-gray;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 5px 0;
+
+  .options-group {
+    text-align: center;
+    padding: 5px 0;
+  }
+
+  .refresh-option {
+    margin-top: 4px;
+  }
+}
+
+.btn:focus,.btn:active:focus,.btn.active:focus,
+.btn.focus,.btn:active.focus,.btn.active.focus {
+    outline: none;
+}

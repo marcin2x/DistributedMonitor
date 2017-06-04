@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.client.monitor.MonitorsController">
+   <children>
+      <TableView prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" fx:id="monitors">
+        <columns>
+          <TableColumn prefWidth="75.0" text="Id monitora" fx:id="monitorId"/>
+          <TableColumn prefWidth="75.0" text="Id uzytkownika" fx:id="userId"/>
+            <TableColumn prefWidth="75.0" text="Nazwa monitora" fx:id="monitorName"/>
+            <TableColumn prefWidth="75.0" text="Adres monitora" fx:id="monitorAddress"/>
+            <TableColumn prefWidth="75.0" text="Port monitora" fx:id="monitorPort"/>
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

@@ -1,5 +1,6 @@
 monitors.controller('monitorInfoCtrl',  ($scope,$filter, $interval, $timeout, $state, $stateParams, $q, monitorsService, measurementsService, hostRestangular) => {
     const DEFAULT_REFRESH_INTERVAL_IN_SECONDS = 10;
+    const DATE_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
 
     $scope.isAddComplexVisible = false;
     $scope.refreshEnabled = true;
@@ -94,8 +95,8 @@ monitors.controller('monitorInfoCtrl',  ($scope,$filter, $interval, $timeout, $s
             if ($scope.archival) {
                 return measurementsService
                     .valuesByIdWithParams(measurement.id, {
-                        time_from: $scope.timeFrom,
-                        time_to: $scope.timeTo
+                        time_from: moment($scope.timeFrom).format(DATE_FORMAT),
+                        time_to: moment($scope.timeTo).format(DATE_FORMAT)
                     }).then(values => prepareDataForChart(values.plain()));
             }
 

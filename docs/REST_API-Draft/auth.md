@@ -168,13 +168,26 @@ Statusy odpowiedzi:
 * 401 brak autoryzacji uzytkownika
 
 ### Usuniecie monitora
-DELETE /monitors/{monitors_id}
+DELETE /monitors
 
 Nalezy dołączyć nagłówek:
 
 "Authorization" : [jwt]
 
 jwt - JSON Web Token
+
+Parametry:
+
+| Nazwa | Wymagany | Opis | Domyślnie |
+|-------|----------|------|-----------|
+| monitor_id | wymagany | id monitora | |
+
+```javascript
+{
+    
+	monitor_id : [long],
+}
+```
 
 Statusy odpowiedzi:
 * 200 usunieto monitor pomyslnie

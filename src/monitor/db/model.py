@@ -464,7 +464,7 @@ class DatabaseModel(Model):
     def complexBelongsToUser(self, measurementId, userId):
         try:
             c = ComplexMeasurement.get(ComplexMeasurement.id == measurementId)
-            if c.userid != userId:
+            if c.userid != str(userId):
                 raise UserNotAllowedToDeleteException
             return True
         except DoesNotExist:

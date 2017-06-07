@@ -130,9 +130,32 @@ monitors.controller('monitorInfoCtrl',  ($scope,$filter, $interval, $timeout, $s
         $scope.setInterval();
     };
 
+    const getUniqueDates = dates => {
+        let uniqueDates = [];
+
+        dates.map(date => uniqueDates.indexOf(date) === -1 && uniqueDates.push(date));
+        return uniqueDates;
+    };
+
+    const getDatasetValueForDate = (dataset, date) => {
+        for (let i = 0; i < dataset.length; i++) {
+            if (dataset[i].x.format() === date) {
+                return dataset[i].y;
+            }
+        }
+    };
+
     $scope.getDataForExport = data => {
-        return Object.keys(data[0]).map(index => {
-            return [data[0][index].x.format()].concat(data.map(dataset => dataset[index].y));
+        let dates = [];
+        data.map(dataset => {
+            dates = dates.concat(dataset.map(valueObject => valueObject.x.format()));
+        });
+
+        const uniqueDates = getUniqueDates(dates);
+        uniqueDates.sort((a, b) => moment(a).diff(moment(b)));
+
+        return uniqueDates.map(date => {
+            return [date].concat(data.map(dataset => getDatasetValueForDate(dataset, date) || ''));
         });
     };
 
@@ -179,6 +202,15 @@ monitors.controller('monitorInfoCtrl',  ($scope,$filter, $interval, $timeout, $s
         }
     }
 
+    const fetchMeasurementsValuesAndUpdateScope = () => {
+        measurementsService.values().then(res => {
+            $scope.allValues = res.plain().map(item => {
+                item.description = getMeasurementName(item.host_name, item.measurement_id);
+                item.value =  item.value.toFixed(2);
+                return item;
+            });
+        });
+    };
 
     monitorsService.get($stateParams.monitorId).then(monitor => {
         $scope.monitor = monitor;
@@ -192,17 +224,8 @@ monitors.controller('monitorInfoCtrl',  ($scope,$filter, $interval, $timeout, $s
 
         measurementsService.getHosts().then(hosts => {
             $scope.hosts = hosts.plain();
-            $interval(() =>{
-                measurementsService.values().then(res => {
-                    $scope.allValues = res.plain().map(item => {
-                        item.description = getMeasurementName(item.host_name, item.measurement_id);
-                        item.value =  item.value.toFixed(2);
-                        return item;
-                    });
-
-                })
-            }, 2000)
-
+            fetchMeasurementsValuesAndUpdateScope();
+            $interval(fetchMeasurementsValuesAndUpdateScope, 20000)
         });
 
 

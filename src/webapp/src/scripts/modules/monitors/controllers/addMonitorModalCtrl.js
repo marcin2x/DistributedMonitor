@@ -10,10 +10,6 @@ monitors.controller('addMonitorModalCtrl', ($scope, $uibModalInstance, monitorsS
         });
     };
 
-    $scope.simulateError = () => {
-        $scope.form = {};
-        $scope.addMonitor(false);
-    }
 
     $scope.ok = function (o) {
         $uibModalInstance.close(o);

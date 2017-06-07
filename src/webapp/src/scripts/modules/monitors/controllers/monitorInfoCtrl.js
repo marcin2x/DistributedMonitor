@@ -186,14 +186,17 @@ monitors.controller('monitorInfoCtrl',  ($scope,$filter, $interval, $timeout, $s
 
         measurementsService.getHosts().then(hosts => {
             $scope.hosts = hosts.plain();
-            measurementsService.values().then(res => {
-                $scope.allValues = res.plain().map(item => {
-                    item.description = getMeasurementName(item.host_name, item.measurement_id);
-                    item.value =  item.value.toFixed(2);
-                    return item;
-                });
+            $interval(() =>{
+                measurementsService.values().then(res => {
+                    $scope.allValues = res.plain().map(item => {
+                        item.description = getMeasurementName(item.host_name, item.measurement_id);
+                        item.value =  item.value.toFixed(2);
+                        return item;
+                    });
 
-            })
+                })
+            }, 2000)
+
         });
 
 

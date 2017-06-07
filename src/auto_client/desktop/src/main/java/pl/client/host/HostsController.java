@@ -26,9 +26,7 @@ import pl.client.monitor.MonitorsController;
 import pl.client.util.Utils;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Timer;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -67,13 +65,14 @@ public class HostsController {
     private String monitorPort;
 
     public void initialize() {
-        cpuValue.setCellValueFactory(new PropertyValueFactory<Measurement, Double>("cpu_value"));
-        ramValue.setCellValueFactory(new PropertyValueFactory<Measurement, Double>("ram_value"));
+        cpuValue.setCellValueFactory(new PropertyValueFactory<Measurement, Double>("value"));
+        ramValue.setCellValueFactory(new PropertyValueFactory<Measurement, Double>("value"));
         intervalComboBox.setItems(options);
         timer = new Timer();
 
         intervalComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
             timer.cancel();
+            timer = new Timer();
             timer.schedule(new java.util.TimerTask() {
                                @Override
                                public void run() {
@@ -135,8 +134,8 @@ public class HostsController {
                                     .get()
                                     .getDescription()));
 
-            cpuData.addAll(metricMeasurements.get("cpu"));
-            ramData.addAll(metricMeasurements.get("ram"));
+            cpuData.addAll(metricMeasurements.getOrDefault("CPU", Collections.emptyList()));
+            ramData.addAll(metricMeasurements.getOrDefault("RAM", Collections.emptyList()));
         } catch (RestClientException e) {
             e.printStackTrace();
         }

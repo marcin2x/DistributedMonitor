@@ -1,10 +1,13 @@
 package pl.client.host;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import java.util.ArrayList;
 
 /**
  * Created by djana on 2017-05-29.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Host {
     private Long id;
     private String name;

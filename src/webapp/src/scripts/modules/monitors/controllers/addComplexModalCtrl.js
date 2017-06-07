@@ -10,7 +10,9 @@ monitors.controller('addComplexModalCtrl', ($scope, $uibModalInstance, monitorsS
 
     $scope.getMeasurements = () => {
         const host = $scope.hosts.find(host => host.name === $scope.host_name);
-        $scope.measurements = host.measurements;
+        $scope.measurements = host.measurements.filter(m => {
+            return m.description == 'CPU' || m.description == 'RAM';
+        });
     }
 
     $scope.addComplex = () => {

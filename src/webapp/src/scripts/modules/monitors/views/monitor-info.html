@@ -163,7 +163,7 @@
                             <td>{{complex.name}}</td>
                             <td>{{complex.type}}</td>
                             <td>{{complex.type}}</td>
-                            <td><button type="button" class="btn btn-danger" ng-click="removeComplex(complex.id)"> Delete </button></td>
+                            <td><button ng-if="complex.canRemove" type="button" class="btn btn-danger" ng-click="removeComplex(complex.id)"> Delete </button></td>
                         </tr>
                         </tbody>
 

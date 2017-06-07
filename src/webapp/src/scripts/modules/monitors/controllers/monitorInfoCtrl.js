@@ -8,19 +8,21 @@ monitors.controller('monitorInfoCtrl',  ($scope,$filter, $interval, $timeout, $s
 
     let interval = '',
         selectedMeasurements = [];
-
+    $scope.user_id = '';
 
     $scope.addComplexModal = () => {
         measurementsService.addComplexModal().then(succ => {
             measurementsService.getHosts().then(hosts => {
                 $scope.hosts = hosts.plain();
-                $scope.select($scope.hosts[0]);
             });
             measurementsService.getComplex().then(res => {
-                $scope.allComplex = res.plain();
+                $scope.allComplex = res.plain().map(complex => {
+                    return Object.assign({}, complex, {canRemove: complex.user_id == $scope.user_id});
+                });
             });
         });
     }
+
 
     $scope.search = {
         host_name: '',
@@ -40,7 +42,9 @@ monitors.controller('monitorInfoCtrl',  ($scope,$filter, $interval, $timeout, $s
         $scope.complexError = null;
         measurementsService.removeComplex(id).then(succ => {
             measurementsService.getComplex().then(res => {
-                $scope.allComplex = res.plain();
+                $scope.allComplex = res.plain().map(complex => {
+                    return Object.assign({}, complex, {canRemove: complex.user_id == $scope.user_id});
+                });
             });
         }, err => {
             $scope.complexError = err.data;
@@ -179,9 +183,11 @@ monitors.controller('monitorInfoCtrl',  ($scope,$filter, $interval, $timeout, $s
     monitorsService.get($stateParams.monitorId).then(monitor => {
         $scope.monitor = monitor;
         hostRestangular.init(monitor.address, monitor.port);
-
+        $scope.user_id = $scope.monitor.user_id;
         measurementsService.getComplex().then(res => {
-            $scope.allComplex = res.plain();
+            $scope.allComplex = res.plain().map(complex => {
+                return Object.assign({}, complex, {canRemove: complex.user_id == $scope.user_id});
+            });
         });
 
         measurementsService.getHosts().then(hosts => {

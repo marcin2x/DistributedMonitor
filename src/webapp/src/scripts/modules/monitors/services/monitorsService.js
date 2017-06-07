@@ -27,7 +27,9 @@ monitors.factory('monitorsService', (Restangular, $uibModal, $rootScope) => {
             return Restangular.all('monitors').post(data,undefined, headers);
         },
         remove = id => {
-            return Restangular.one('monitors',id).remove(undefined, headers);
+            return Restangular.one('monitors').remove({
+                monitor_id: id
+            }, headers);
         }
 
     return {

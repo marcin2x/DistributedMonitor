@@ -7,7 +7,9 @@ monitors.factory('measurementsService', (Restangular, $uibModal, $rootScope) => 
         port: $rootScope._port
     }),
         values = () => {
-            return Restangular.one('measurements/values').customGET('', query());
+            return Restangular.one('measurements/values').customGET('', Object.assign(query(), {
+                order: 'desc'
+            }));
         },
         valuesById = id => {
             return Restangular.one(`measurements/${id}/values`).customGET('', query());

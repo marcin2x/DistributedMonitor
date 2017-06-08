@@ -7,19 +7,19 @@ import org.codehaus.jackson.annotate.JsonProperty;
  */
 
 public class Measurement {
-    private String host_name;
+    private String hostName;
     private Long measurement_id;
     private Double value;
     private String date;
 
 
     public String getHostName() {
-        return this.host_name;
+        return this.hostName;
     }
 
     @JsonProperty(value = "host_name")
-    public void setHostName(String host_name) {
-        this.host_name = host_name;
+    public void setHostName(String hostName) {
+        this.hostName = hostName;
     }
 
     public Long getMeasurementId() { return this.measurement_id;}

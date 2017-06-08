@@ -25,10 +25,13 @@ import pl.client.login.JwtString;
 import pl.client.monitor.MonitorsController;
 import pl.client.util.Utils;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static java.util.Comparator.comparing;
 
 /**
  * Created by djana on 2017-05-29.
@@ -39,13 +42,13 @@ public class HostsController {
     public ComboBox<Long> intervalComboBox;
     ObservableList<Measurement> cpuData = FXCollections.observableArrayList();
     @FXML
-    public TableColumn<Measurement, Double> cpuValue;
+    public TableColumn<Measurement, String> cpuHost;
     @FXML
     public TableView<Measurement> cpuMeasurements;
     ObservableList<Long> options = FXCollections.observableArrayList(15L, 30L, 45L, 60L);
     ObservableList<Measurement> ramData = FXCollections.observableArrayList();
     @FXML
-    public TableColumn<Measurement, Double> ramValue;
+    public TableColumn<Measurement, String> ramHost;
     @FXML
     public TableView<Measurement> ramMeasurements;
 
@@ -65,8 +68,8 @@ public class HostsController {
     private String monitorPort;
 
     public void initialize() {
-        cpuValue.setCellValueFactory(new PropertyValueFactory<Measurement, Double>("value"));
-        ramValue.setCellValueFactory(new PropertyValueFactory<Measurement, Double>("value"));
+        ramHost.setCellValueFactory(new PropertyValueFactory<Measurement, String>("hostName"));
+        cpuHost.setCellValueFactory(new PropertyValueFactory<Measurement, String>("hostName"));
         intervalComboBox.setItems(options);
         timer = new Timer();
 
@@ -105,26 +108,20 @@ public class HostsController {
         Utils utils = new Utils();
 
         try {
+
             ResponseEntity<Hosts> hostsResponseEntity = rt.exchange(utils.getHostsAddress(monitorAddress, monitorPort), HttpMethod.GET, entity, Hosts.class);
             Hosts hosts = hostsResponseEntity.getBody();
 
             ResponseEntity<Measurements> measurementsResponseEntity = rt.exchange(utils.getMesurementsValues(monitorAddress, monitorPort), HttpMethod.GET, entity, Measurements.class);
             Measurements measurements = measurementsResponseEntity.getBody();
 
-            List<Measurement> lastHostValues = measurements
-                    .stream()
-                    .collect(Collectors.groupingBy(e -> e.getHostName()))
-                    .entrySet()
-                    .stream()
-                    .flatMap(e -> Stream.of(e.getValue().get(0)))
-                    .collect(Collectors.toList());
-
             List<HostMeasurement> hostMeasurements = hosts
                     .stream()
                     .flatMap(e -> e.getMeasurements().stream())
                     .collect(Collectors.toList());
 
-            Map<String, List<Measurement>> metricMeasurements = lastHostValues
+
+            Map<String, List<Measurement>> metricMeasurements = measurements
                     .stream()
                     .collect(Collectors.groupingBy(e ->
                             hostMeasurements
@@ -134,8 +131,38 @@ public class HostsController {
                                     .get()
                                     .getDescription()));
 
-            cpuData.addAll(metricMeasurements.getOrDefault("CPU", Collections.emptyList()));
-            ramData.addAll(metricMeasurements.getOrDefault("RAM", Collections.emptyList()));
+
+            List<Measurement> cpuMeasurementMetric = metricMeasurements.getOrDefault("CPU", Collections.emptyList())
+                    .stream()
+                    .collect(Collectors.groupingBy(e -> e.getHostName()))
+                    .entrySet()
+                    .stream()
+                    .flatMap(e -> Stream.of(e.getValue().get(0)))
+                    .collect(Collectors.toList());
+            Collections.sort(cpuMeasurementMetric,new Comparator<Measurement>() {
+                @Override
+                public int compare(Measurement a, Measurement b) {
+                    return b.getValue().compareTo(a.getValue());
+                }
+            });
+
+            List<Measurement> ramMeasurementMetric = metricMeasurements.getOrDefault("RAM", Collections.emptyList())
+                    .stream()
+                    .collect(Collectors.groupingBy(e -> e.getHostName()))
+                    .entrySet()
+                    .stream()
+                    .flatMap(e -> Stream.of(e.getValue().get(0)))
+                    .collect(Collectors.toList());
+            Collections.sort(ramMeasurementMetric,new Comparator<Measurement>() {
+                @Override
+                public int compare(Measurement a, Measurement b) {
+                    return b.getValue().compareTo(a.getValue());
+                }
+            });
+
+            cpuData.addAll(cpuMeasurementMetric);
+            ramData.addAll(ramMeasurementMetric);
+
         } catch (RestClientException e) {
             e.printStackTrace();
         }

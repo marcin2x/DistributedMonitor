@@ -17,13 +17,13 @@
     <Button fx:id="backButton" mnemonicParsing="false" onAction="#onBack" text="Back" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
     <TableView fx:id="cpuMeasurements" GridPane.columnSpan="2" GridPane.rowIndex="2">
         <columns>
-            <TableColumn fx:id="cpuValue" prefWidth="75.0" text="VALUE" />
+            <TableColumn fx:id="cpuHost" prefWidth="75.0" text="HOST" />
         </columns>
     </TableView>
     <Label text="RAM" GridPane.rowIndex="3" />
     <TableView fx:id="ramMeasurements" GridPane.columnSpan="2" GridPane.rowIndex="4">
         <columns>
-            <TableColumn fx:id="ramValue" prefWidth="75.0" text="VALUE" />
+            <TableColumn fx:id="ramHost" prefWidth="75.0" text="HOST" />
         </columns>
     </TableView>
 </children>
